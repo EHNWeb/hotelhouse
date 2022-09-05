@@ -6,9 +6,13 @@ use App\Repository\SpaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=SpaRepository::class)
+ * @Vich\Uploadable
  */
 class Spa
 {
@@ -64,6 +68,11 @@ class Spa
      */
     private $date_modification;
 
+    /**
+     * @Vich\UploadableField(mapping="spa", fileNameProperty="image")
+     */
+    private $imageFile;
+
     public function __construct()
     {
         $this->commandeSpas = new ArrayCollection();
@@ -115,7 +124,7 @@ class Spa
         return $this->fiche_soin;
     }
 
-    public function setFicheSoin(string $fiche_soin): self
+    public function setFicheSoin(?string $fiche_soin): self
     {
         $this->fiche_soin = $fiche_soin;
 
@@ -196,6 +205,23 @@ class Spa
     public function setDateModification(\DateTimeInterface $date_modification): self
     {
         $this->date_modification = $date_modification;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if($this->imageFile instanceof UploadedFile)
+        {
+            $this->date_modification = new \DateTime;
+        }
 
         return $this;
     }
