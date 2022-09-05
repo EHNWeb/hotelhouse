@@ -79,6 +79,11 @@ class CommandeChambre
      */
     private $date_enregistrement;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $id_option_pdj;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -224,6 +229,18 @@ class CommandeChambre
     public function setDateEnregistrement(\DateTimeInterface $date_enregistrement): self
     {
         $this->date_enregistrement = $date_enregistrement;
+
+        return $this;
+    }
+
+    public function getIdOptionPdj(): ?int
+    {
+        return $this->id_option_pdj;
+    }
+
+    public function setIdOptionPdj(?int $id_option_pdj): self
+    {
+        $this->id_option_pdj = $id_option_pdj;
 
         return $this;
     }
