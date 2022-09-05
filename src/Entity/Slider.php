@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Repository\SliderRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=SliderRepository::class)
+ * @Vich\Uploadable
  */
 class Slider
 {
@@ -47,6 +51,11 @@ class Slider
      */
     private $date_modification;
 
+    /**
+     * @Vich\UploadableField(mapping="slider", fileNameProperty="image")
+     */
+    private $imageFile;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -57,7 +66,7 @@ class Slider
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
 
@@ -120,6 +129,23 @@ class Slider
     public function setDateModification(\DateTimeInterface $date_modification): self
     {
         $this->date_modification = $date_modification;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if($this->imageFile instanceof UploadedFile)
+        {
+            $this->date_modification = new \DateTime;
+        }
 
         return $this;
     }
