@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SpaRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,16 @@ class Spa
      * @ORM\Column(type="datetime")
      */
     private $date_enregistrement;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CommandeSpa::class, mappedBy="id_spa")
+     */
+    private $commandeSpas;
+
+    public function __construct()
+    {
+        $this->commandeSpas = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +149,36 @@ class Spa
     public function setDateEnregistrement(\DateTimeInterface $date_enregistrement): self
     {
         $this->date_enregistrement = $date_enregistrement;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandeSpa>
+     */
+    public function getCommandeSpas(): Collection
+    {
+        return $this->commandeSpas;
+    }
+
+    public function addCommandeSpa(CommandeSpa $commandeSpa): self
+    {
+        if (!$this->commandeSpas->contains($commandeSpa)) {
+            $this->commandeSpas[] = $commandeSpa;
+            $commandeSpa->setIdSpa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeSpa(CommandeSpa $commandeSpa): self
+    {
+        if ($this->commandeSpas->removeElement($commandeSpa)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeSpa->getIdSpa() === $this) {
+                $commandeSpa->setIdSpa(null);
+            }
+        }
 
         return $this;
     }
