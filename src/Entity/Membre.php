@@ -69,9 +69,15 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $commentaires;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CommandeChambre::class, mappedBy="id_membre")
+     */
+    private $commandeChambres;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
+        $this->commandeChambres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,6 +253,36 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($commentaire->getIdMembre() === $this) {
                 $commentaire->setIdMembre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandeChambre>
+     */
+    public function getCommandeChambres(): Collection
+    {
+        return $this->commandeChambres;
+    }
+
+    public function addCommandeChambre(CommandeChambre $commandeChambre): self
+    {
+        if (!$this->commandeChambres->contains($commandeChambre)) {
+            $this->commandeChambres[] = $commandeChambre;
+            $commandeChambre->setIdMembre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeChambre(CommandeChambre $commandeChambre): self
+    {
+        if ($this->commandeChambres->removeElement($commandeChambre)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeChambre->getIdMembre() === $this) {
+                $commandeChambre->setIdMembre(null);
             }
         }
 

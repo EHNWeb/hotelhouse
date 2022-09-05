@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ChambreRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +58,16 @@ class Chambre
      * @ORM\Column(type="integer")
      */
     private $quantite;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CommandeChambre::class, mappedBy="id_chambre")
+     */
+    private $commandeChambres;
+
+    public function __construct()
+    {
+        $this->commandeChambres = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -154,6 +166,36 @@ class Chambre
     public function setQuantite(int $quantite): self
     {
         $this->quantite = $quantite;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommandeChambre>
+     */
+    public function getCommandeChambres(): Collection
+    {
+        return $this->commandeChambres;
+    }
+
+    public function addCommandeChambre(CommandeChambre $commandeChambre): self
+    {
+        if (!$this->commandeChambres->contains($commandeChambre)) {
+            $this->commandeChambres[] = $commandeChambre;
+            $commandeChambre->setIdChambre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeChambre(CommandeChambre $commandeChambre): self
+    {
+        if ($this->commandeChambres->removeElement($commandeChambre)) {
+            // set the owning side to null (unless already changed)
+            if ($commandeChambre->getIdChambre() === $this) {
+                $commandeChambre->setIdChambre(null);
+            }
+        }
 
         return $this;
     }
