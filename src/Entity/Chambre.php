@@ -6,9 +6,13 @@ use App\Repository\ChambreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=ChambreRepository::class)
+ * @Vich\Uploadable
  */
 class Chambre
 {
@@ -64,6 +68,11 @@ class Chambre
      */
     private $commandeChambres;
 
+    /**
+     * @Vich\UploadableField(mapping="articles", fileNameProperty="image")
+    */
+    private $imageFile;
+
     public function __construct()
     {
         $this->commandeChambres = new ArrayCollection();
@@ -115,7 +124,7 @@ class Chambre
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): self
+    public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
 
@@ -195,6 +204,25 @@ class Chambre
             if ($commandeChambre->getIdChambre() === $this) {
                 $commandeChambre->setIdChambre(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if($this->imageFile instanceof UploadedFile)
+        {
+            // Si on uplaod un fichier lors de l'édition de l'article, il faut forcer la soumission des fiomulaires
+            // en mettant à jour le champs updatedAt
+            $this->date_update = new \DateTime;
         }
 
         return $this;
