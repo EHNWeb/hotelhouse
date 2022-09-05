@@ -59,6 +59,11 @@ class Spa
      */
     private $commandeSpas;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_modification;
+
     public function __construct()
     {
         $this->commandeSpas = new ArrayCollection();
@@ -179,6 +184,18 @@ class Spa
                 $commandeSpa->setIdSpa(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateModification(): ?\DateTimeInterface
+    {
+        return $this->date_modification;
+    }
+
+    public function setDateModification(\DateTimeInterface $date_modification): self
+    {
+        $this->date_modification = $date_modification;
 
         return $this;
     }

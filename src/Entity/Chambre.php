@@ -69,7 +69,7 @@ class Chambre
     private $commandeChambres;
 
     /**
-     * @Vich\UploadableField(mapping="articles", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="chambre", fileNameProperty="image")
     */
     private $imageFile;
 
@@ -220,8 +220,6 @@ class Chambre
 
         if($this->imageFile instanceof UploadedFile)
         {
-            // Si on uplaod un fichier lors de l'édition de l'article, il faut forcer la soumission des fiomulaires
-            // en mettant à jour le champs updatedAt
             $this->date_update = new \DateTime;
         }
 

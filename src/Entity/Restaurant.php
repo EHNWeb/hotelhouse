@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Repository\RestaurantRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass=RestaurantRepository::class)
+ * @Vich\Uploadable
  */
 class Restaurant
 {
@@ -46,6 +50,16 @@ class Restaurant
      * @ORM\Column(type="datetime")
      */
     private $date_enregistrement;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $date_modification;
+
+    /**
+     * @Vich\UploadableField(mapping="restaurant", fileNameProperty="image")
+     */
+    private $imageFile;
 
     public function getId(): ?int
     {
@@ -93,7 +107,7 @@ class Restaurant
         return $this->carte;
     }
 
-    public function setCarte(string $carte): self
+    public function setCarte(?string $carte): self
     {
         $this->carte = $carte;
 
@@ -123,4 +137,34 @@ class Restaurant
 
         return $this;
     }
+
+    public function getDateModification(): ?\DateTimeInterface
+    {
+        return $this->date_modification;
+    }
+
+    public function setDateModification(\DateTimeInterface $date_modification): self
+    {
+        $this->date_modification = $date_modification;
+
+        return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile = null): self
+    {
+        $this->imageFile = $imageFile;
+
+        if($this->imageFile instanceof UploadedFile)
+        {
+            $this->date_modification = new \DateTime;
+        }
+
+        return $this;
+    }
+
 }
