@@ -2,6 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Actualite;
+use App\Entity\Chambre;
+use App\Entity\CommandeChambre;
+use App\Entity\CommandeRestaurant;
+use App\Entity\CommandeSpa;
+use App\Entity\Commentaire;
+use App\Entity\Membre;
+use App\Entity\Restaurant;
+use App\Entity\Slider;
+use App\Entity\Spa;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -26,7 +36,24 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        return [
+            MenuItem::linkToRoute('Accueil', 'fa fa-home', 'home'),
+            MenuItem::linkToDashboard('Admin', 'fa fa-gear'),
+            MenuItem::section('Hôtel'),
+            MenuItem::linkToCrud('Chambres', 'fa fa-bed', Chambre::class),
+            MenuItem::linkToCrud('Restauration', 'fa fa-utensils', Restaurant::class),
+            MenuItem::linkToCrud('Spa', 'fa fa-spa', Spa::class),
+            MenuItem::section('Services'),
+            MenuItem::linkToCrud('Cde Chambre', 'fa fa-bed', CommandeChambre::class),
+            MenuItem::linkToCrud('Cde Restaurant', 'fa fa-utensils', CommandeRestaurant::class),
+            MenuItem::linkToCrud('Cde Spa', 'fa fa-spa', CommandeSpa::class),
+            MenuItem::section('Utilisateurs'),
+            MenuItem::linkToCrud('Membres', 'fa fa-users', Membre::class),
+            MenuItem::linkToCrud('Commentaires', 'fa fa-comments', Commentaire::class),
+            MenuItem::section('Site'),
+            MenuItem::linkToCrud('Slider', 'fa fa-images', Slider::class),
+            MenuItem::linkToCrud('Actualités', 'fa fa-newspaper', Actualite::class)
+        ];
+
     }
 }
