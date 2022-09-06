@@ -9,6 +9,7 @@ use App\Entity\CommandeRestaurant;
 use App\Entity\CommandeSpa;
 use App\Entity\Commentaire;
 use App\Entity\Membre;
+use App\Entity\Option;
 use App\Entity\Restaurant;
 use App\Entity\Slider;
 use App\Entity\Spa;
@@ -52,7 +53,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Commentaires', 'fa fa-comments', Commentaire::class),
             MenuItem::section('Site'),
             MenuItem::linkToCrud('Slider', 'fa fa-images', Slider::class),
-            MenuItem::linkToCrud('Actualités', 'fa fa-newspaper', Actualite::class)
+            MenuItem::linkToCrud('Actualités', 'fa fa-newspaper', Actualite::class),
+            MenuItem::linkToCrud('Options', 'fa fa-check', Option::class)
         ];
 
     }
