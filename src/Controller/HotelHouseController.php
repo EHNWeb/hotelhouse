@@ -9,11 +9,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class HotelHouseController extends AbstractController
 {
     /**
-     * @Route("/hotel/house", name="app_hotel_house")
+     * @Route("/", name="home")
+     * @Route("/hotel", name="app_hotel_house")
      */
     public function index(): Response
     {
         return $this->render('hotel_house/index.html.twig', [
+            'controller_name' => 'HotelHouseController',
+        ]);
+    }
+
+    /**
+     * @Route("/test", name="app_test")
+     */
+    public function test(): Response
+    {
+        return $this->render('hotel_house/test.html.twig', [
             'controller_name' => 'HotelHouseController',
         ]);
     }
