@@ -27,8 +27,8 @@ class SliderCrudController extends AbstractCrudController
             ImageField::new('photo')
             ->setBasePath('images/slider/')
             ->setUploadDir('public/images/slider')
-            ->setRequired(false)
-            ->setUploadedFileNamePattern('[ulid].[extension]'),
+            ->setUploadedFileNamePattern('[ulid].[extension]')
+            ->setRequired(false),
             IntegerField::new('ordre', 'Ordre'),
             DateTimeField::new('DateEnregistrement', 'Date ajout')->setFormat("dd/MM/Y HH:mm:ss")->onlyOnIndex()
         ];
