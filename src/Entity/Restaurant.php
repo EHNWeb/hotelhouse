@@ -57,7 +57,7 @@ class Restaurant
     private $date_modification;
 
     /**
-     * @Vich\UploadableField(mapping="restaurant", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="restaurant", fileNameProperty="carte")
      */
     private $imageFile;
 
