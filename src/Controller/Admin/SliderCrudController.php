@@ -24,7 +24,7 @@ class SliderCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnIndex(),
             TextField::new('titre', 'Titre'),
             TextField::new('texte', 'Sous-titre'),
-            ImageField::new('photo')
+            ImageField::new('photo', 'Image')
             ->setBasePath('images/slider/')
             ->setUploadDir('public/images/slider')
             ->setUploadedFileNamePattern('[ulid].[extension]')
@@ -33,6 +33,7 @@ class SliderCrudController extends AbstractCrudController
             DateTimeField::new('DateEnregistrement', 'Date ajout')->setFormat("dd/MM/Y HH:mm:ss")->onlyOnIndex()
         ];
     }
+    
     public function createEntity(string $entityFqcn)
     {
         // La fonction sera exécuter lors de la creation d'un article avant ADD Article

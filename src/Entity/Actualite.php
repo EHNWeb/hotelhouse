@@ -29,11 +29,6 @@ class Actualite
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $categorie;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $description;
 
     /**
@@ -61,6 +56,11 @@ class Actualite
      */
     private $imageFile;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $categorie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,18 +74,6 @@ class Actualite
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
-
-        return $this;
-    }
-
-    public function getCategorie(): ?string
-    {
-        return $this->categorie;
-    }
-
-    public function setCategorie(string $categorie): self
-    {
-        $this->categorie = $categorie;
 
         return $this;
     }
@@ -163,6 +151,18 @@ class Actualite
         {
             $this->date_modification = new \DateTime;
         }
+
+        return $this;
+    }
+
+    public function getCategorie(): ?int
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(int $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
