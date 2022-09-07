@@ -69,7 +69,7 @@ class Spa
     private $date_modification;
 
     /**
-     * @Vich\UploadableField(mapping="spa", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="spa", fileNameProperty="fiche_soin")
      */
     private $imageFile;
 

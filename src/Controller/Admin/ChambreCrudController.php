@@ -38,7 +38,7 @@ class ChambreCrudController extends AbstractCrudController
             ->setUploadedFileNamePattern('[ulid].[extension]')
             ->setRequired(false),
             NumberField::new('prix', 'prix journalier')->setNumDecimals(2),
-            IntegerField::new('quantite', 'Nb chambre total'),
+            IntegerField::new('quantite', 'Nb chambre disponibles'),
             DateTimeField::new('DateEnregistrement', 'Date ajout')->setFormat("dd/MM/Y HH:mm:ss")->onlyOnIndex()
 
         ];

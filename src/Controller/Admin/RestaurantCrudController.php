@@ -41,7 +41,7 @@ class RestaurantCrudController extends AbstractCrudController
                     ]
             ]),
             TextField::new('carte', 'Menu')->setTemplatePath('admin/field/restaurant_link.html.twig')->onlyOnIndex(),
-            IntegerField::new('quantite', 'Nb table total'),
+            IntegerField::new('quantite', 'Nb table disponibles'),
             DateTimeField::new('DateEnregistrement', 'Date ajout')->setFormat("dd/MM/Y HH:mm:ss")->onlyOnIndex()
         ];
     }
