@@ -22,3 +22,6 @@ vich_uploader:
        siteweb:
            uri_prefix: /images/siteweb
            upload_destination: '%kernel.project_dir%/public/images/siteweb'
+        actualite:
+           uri_prefix: /images/actualite
+           upload_destination: '%kernel.project_dir%/public/images/actualite'
