@@ -84,6 +84,11 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $commandeSpas;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $telephone;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -357,6 +362,18 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
                 $commandeSpa->setIdMembre(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }
