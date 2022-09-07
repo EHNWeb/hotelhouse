@@ -52,7 +52,7 @@ class Slider
     private $date_modification;
 
     /**
-     * @Vich\UploadableField(mapping="slider", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="slider", fileNameProperty="photo")
      */
     private $imageFile;
 
