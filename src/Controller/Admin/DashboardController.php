@@ -40,7 +40,7 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::linkToRoute('Accueil', 'fa fa-home', 'home'),
             MenuItem::linkToDashboard('Admin', 'fa fa-gear'),
-            MenuItem::section('Hôtel'),
+            MenuItem::section('Hôtel', 'fa fa-house-user'),
             MenuItem::linkToCrud('Chambres', 'fa fa-bed', Chambre::class),
             MenuItem::linkToCrud('Restauration', 'fa fa-utensils', Restaurant::class),
             MenuItem::linkToCrud('Spa', 'fa fa-spa', Spa::class),
@@ -51,7 +51,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::section('Utilisateurs', 'fa fa-users'),
             MenuItem::linkToCrud('Membres', 'fa fa-user', Membre::class),
             MenuItem::linkToCrud('Commentaires', 'fa fa-comments', Commentaire::class),
-            MenuItem::section('Site'),
+            MenuItem::section('Site', 'fa fa-globe'),
             MenuItem::linkToCrud('Slider', 'fa fa-images', Slider::class),
             MenuItem::linkToCrud('Actualités', 'fa fa-newspaper', Actualite::class),
             MenuItem::linkToCrud('Options', 'fa fa-check', Option::class)

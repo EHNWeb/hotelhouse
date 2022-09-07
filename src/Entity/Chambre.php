@@ -69,7 +69,7 @@ class Chambre
     private $commandeChambres;
 
     /**
-     * @Vich\UploadableField(mapping="chambre", fileNameProperty="image")
+     * @Vich\UploadableField(mapping="chambre", fileNameProperty="photo")
     */
     private $imageFile;
 

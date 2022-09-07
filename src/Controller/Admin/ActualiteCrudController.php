@@ -59,7 +59,6 @@ class ActualiteCrudController extends AbstractCrudController
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
     {
-        // La fonction sera exécuter lors de la creation d'un article avant ADD Article
         $ifile = $entityInstance->getPhoto();
 
         if(!$ifile)
