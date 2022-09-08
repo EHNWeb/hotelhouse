@@ -9,6 +9,7 @@ use App\Entity\CommandeRestaurant;
 use App\Entity\CommandeSpa;
 use App\Entity\Commentaire;
 use App\Entity\Membre;
+use App\Entity\Message;
 use App\Entity\Newsletter;
 use App\Entity\Option;
 use App\Entity\Restaurant;
@@ -55,6 +56,7 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Membres', 'fa fa-user', Membre::class),
             MenuItem::linkToCrud('Commentaires', 'fa fa-comments', Commentaire::class),
             MenuItem::linkToCrud('Newsletters', 'fa fa-envelope-open-text', Newsletter::class),
+            MenuItem::linkToCrud('Messages', 'fa fa-envelope', Message::class),
             MenuItem::section('Site', 'fa fa-globe'),
             MenuItem::linkToCrud('Slider Accueil', 'fa fa-images', Slider::class),
             MenuItem::linkToCrud('Slider restaurant', 'fa fa-images', SliderRestaurant::class),
