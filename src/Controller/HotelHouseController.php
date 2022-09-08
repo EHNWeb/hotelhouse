@@ -6,6 +6,8 @@ use App\Repository\ChambreRepository;
 use App\Repository\RestaurantRepository;
 use App\Repository\SliderRepository;
 use App\Repository\SliderRestaurantRepository;
+use App\Repository\SliderSpaRepository;
+use App\Repository\SpaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,5 +61,19 @@ class HotelHouseController extends AbstractController
             'tabRestaurants' => $restaurant
         ]);
     }
+
+    /**
+     * @Route("/hotel/spa", name="show_spa")
+     */
+    public function show_spa(SliderSpaRepository $repoSliderSpa, SpaRepository $repoSpa, EntityManagerInterface $manager): Response
+    {
+        $sliders = $repoSliderSpa->findBy(array(), array('ordre' => 'ASC'));
+        $spa = $repoSpa->findAll();
+        return $this->render('hotel_house/show_spa.html.twig', [
+            'sliders' => $sliders,
+            'tabSpas' => $spa
+        ]);
+    }
+
 
 }
