@@ -74,6 +74,13 @@ class HotelHouseController extends AbstractController
             'tabSpas' => $spa
         ]);
     }
-
+ 
+    /**
+     *@Route("/hotel/contact", name="hotel_contact") 
+     */
+    public function hotel_contact()
+    {
+        return $this->render('hotel_house/hotel_contact.html.twig');
+    }
 
 }

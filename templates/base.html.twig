@@ -60,10 +60,11 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">L'hôtel</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Contact</a>
+                                <a class="dropdown-item" href="{{ path('hotel_contact') }}">Contact</a>
+                                <a class="dropdown-item" href="#">Accès</a>
                                 <a class="dropdown-item" href="#">Avis</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">A propos</a>
+                                <a class="dropdown-item" href="#">Qui sommes-nous ?</a>
                             </div>
                         </li>
                     </ul>
@@ -240,20 +241,20 @@
                         class="row">
                         <!--Grid column-->
                         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
+                            <h5 class="text-uppercase">Raccourcis</h5>
 
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#!" class="text-white">Link 1</a>
+                                    <a href="{{ path('home') }}" class="text-white">Accueil</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-white">Link 2</a>
+                                    <a href="{{ path('show_chambre') }}" class="text-white">Chambre</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-white">Link 3</a>
+                                    <a href="{{ path('show_restaurant') }}" class="text-white">Restaurant</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-white">Link 4</a>
+                                    <a href="{{ path('show_spa') }}" class="text-white">Spa</a>
                                 </li>
                             </ul>
                         </div>
@@ -303,11 +304,15 @@
 
                         <!--Grid column-->
                         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
+                            <h5 class="text-uppercase">LinRaccourcisks</h5>
 
                             <ul class="list-unstyled mb-0">
                                 <li>
                                     <a href="#!" class="text-white">Link 1</a>
+                                    <ul class="list-unstyled">
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!" class="text-white">Link 1</a>
+
+                                    </li></ul>
                                 </li>
                                 <li>
                                     <a href="#!" class="text-white">Link 2</a>
