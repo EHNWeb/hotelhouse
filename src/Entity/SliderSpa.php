@@ -2,16 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\SliderRestaurantRepository;
+use App\Repository\SliderSpaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 /**
- * @ORM\Entity(repositoryClass=SliderRestaurantRepository::class)
+ * @ORM\Entity(repositoryClass=SliderSpaRepository::class)
  * @Vich\Uploadable
  */
-class SliderRestaurant
+class SliderSpa
 {
     /**
      * @ORM\Id
@@ -131,6 +132,7 @@ class SliderRestaurant
 
         return $this;
     }
+
     public function getImageFile(): ?File
     {
         return $this->imageFile;
