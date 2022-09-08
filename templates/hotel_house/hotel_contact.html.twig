@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block body %}
+
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success text-center">{{ message }}</div>
+	{% endfor %}
+	
 	<div class="text-center">
 		<table class="table table-borderless">
 			<thead>
@@ -58,24 +63,100 @@
                     </td>
                 </tr>
 			</tbody>
-			<tfoot>
-				<tr class="border-bottom">
-					<td class="align-middle">
-						{% if app.user %}
-							<a href="#" class="btn btn-success">Réserver une table &nbsp;<i class="fa-solid fa-utensils"></i>
-							</a>
-						{% else %}
-							<a href="{{ path('app_login') }}" class="btn btn-success">
-								Pour réserver
-								<i class="fa-solid fa-moon"></i><br>
-								Connectez vous
-								<i class="fa-solid fa-arrow-right-to-bracket"></i><br>
-							</a>
-						{% endif %}
-					</td>
-				</tr>
-			</tfoot>
 		</table>
+
+	{{ form_start(formMessage, {
+			attr: {
+				novalidate: 'novalidate'
+				}
+			})
+		}}
+		<table class="table table-sm table-borderless">
+			<thead>
+				<th colspan="4">Formulaire de contact</th>
+			</thead>
+			<tr>
+				<td colspan="2" class="fw-bold">
+					{{ form_label(formMessage.nom, 'Nom')}}
+				</td>
+				<td colspan="2" class="fw-bold">
+					{{ form_label(formMessage.prenom, 'Prénom')}}
+				</td>
+			</tr>
+			<tr>
+				<td class="bg-info bg-opacity-10">
+						&nbsp;<i class="fa-solid fa-pen fa-2x"></i>&nbsp;
+				</td>
+				<td>
+					{{ form_widget(formMessage.nom, {
+						attr: {
+							placeholder: "Votre nom"
+							}
+					}) }}
+				</td>
+				<td class="bg-info bg-opacity-10">
+						&nbsp;<i class="fa-solid fa-pen fa-2x"></i>&nbsp;
+				</td>
+				<td>
+					{{ form_widget(formMessage.prenom, {
+						attr: {
+							placeholder: "Votre prénom"
+							}
+					}) }}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" class="fw-bold">
+					{{ form_label(formMessage.email, 'E-mail')}}
+				</td>
+				<td colspan="2" class="fw-bold">
+					{{ form_label(formMessage.telephone, 'Téléphone')}}
+				</td>	
+			</tr>
+				<td class="bg-info bg-opacity-10">
+						&nbsp;<i class="fa-solid fa-at fa-2x"></i>&nbsp;
+				</td>
+				<td>
+					{{ form_widget(formMessage.email, {
+						attr: {
+							placeholder: "Votre e-mail"
+							}
+					}) }}
+				</td>
+				<td class="bg-info bg-opacity-10">
+						&nbsp;<i class="fa-solid fa-phone fa-2x"></i>&nbsp;
+				</td>
+				<td>
+					{{ form_widget(formMessage.telephone, {
+						attr: {
+							placeholder: "Votre n° de téléphone"
+							}
+					}) }}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" class="fw-bold">
+					{{ form_label(formMessage.message, 'Votre message')}}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					{{ form_widget(formMessage.message, {
+						attr: {
+							placeholder: "Ecrivez votre message ...",
+							cols: '100',
+							rows: '8'
+							}
+					}) }}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<button type="submit" class="btn btn-primary mt-2">Envoyer&nbsp;<i class="fa-regular fa-paper-plane"></i></button>
+				</td>
+			</tr>
+		</table>
+	{{ form_end(formMessage) }}
 	</div>
 
 {% endblock %}

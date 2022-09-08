@@ -2,16 +2,19 @@
 
 namespace App\Controller;
 
-use App\Repository\ChambreRepository;
-use App\Repository\RestaurantRepository;
-use App\Repository\SliderRepository;
-use App\Repository\SliderRestaurantRepository;
-use App\Repository\SliderSpaRepository;
+use App\Entity\Message;
+use App\Form\ContactType;
 use App\Repository\SpaRepository;
+use App\Repository\SliderRepository;
+use App\Repository\ChambreRepository;
+use App\Repository\SliderSpaRepository;
+use App\Repository\RestaurantRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use App\Repository\SliderRestaurantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HotelHouseController extends AbstractController
 {
@@ -78,9 +81,25 @@ class HotelHouseController extends AbstractController
     /**
      *@Route("/hotel/contact", name="hotel_contact") 
      */
-    public function hotel_contact()
+    public function hotel_contact(Request $superGlobals, EntityManagerInterface $manager)
     {
-        return $this->render('hotel_house/hotel_contact.html.twig');
+        $message = new Message();
+        $message->setDateEnregistrement(new \DateTime());
+
+        $messageForm = "Votre message a bien été pris en compte.";
+        $form = $this->createForm(ContactType::class, $message);
+        $form->handleRequest($superGlobals);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($message);
+            $manager->flush();
+            $this->addFlash('success', $messageForm);
+            return $this->redirectToRoute('hotel_contact');
+        }
+
+        return $this->render('hotel_house/hotel_contact.html.twig', [
+            'formMessage' => $form->createView()
+        ]);
     }
 
 }

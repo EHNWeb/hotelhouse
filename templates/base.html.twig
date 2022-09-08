@@ -60,8 +60,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">L'hôtel</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ path('hotel_contact') }}">Contact</a>
-                                <a class="dropdown-item" href="#">Accès</a>
+                                <a class="dropdown-item" href="{{ path('hotel_contact') }}">Contact / Accès</a>
                                 <a class="dropdown-item" href="#">Avis</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Qui sommes-nous ?</a>
@@ -262,20 +261,17 @@
 
                         <!--Grid column-->
                         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
+                            <h5 class="text-uppercase">L'hôtel</h5>
 
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#!" class="text-white">Link 1</a>
+                                    <a href="{{ path('hotel_contact') }}" class="text-white">Qui sommes-nous ?</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-white">Link 2</a>
+                                    <a href="{{ path('hotel_contact') }}" class="text-white">Accès</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
+                                    <a href="{{ path('hotel_contact') }}" class="text-white">Contact</a>
                                 </li>
                             </ul>
                         </div>
@@ -283,20 +279,17 @@
 
                         <!--Grid column-->
                         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
+                            <h5 class="text-uppercase">A propos</h5>
 
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#!" class="text-white">Link 1</a>
+                                    <a href="#!" class="text-white">Mentions légales</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-white">Link 2</a>
+                                    <a href="#!" class="text-white">Conditions générales de ventes</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
+                                    <a href="#!" class="text-white">Plan du site</a>
                                 </li>
                             </ul>
                         </div>
@@ -304,24 +297,14 @@
 
                         <!--Grid column-->
                         <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">LinRaccourcisks</h5>
+                            <h5 class="text-uppercase">Divers</h5>
 
                             <ul class="list-unstyled mb-0">
                                 <li>
-                                    <a href="#!" class="text-white">Link 1</a>
-                                    <ul class="list-unstyled">
-                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#!" class="text-white">Link 1</a>
-
-                                    </li></ul>
+                                    <a href="{{ path('hotel_contact') }}" class="text-white">Nous écrire</a>
                                 </li>
                                 <li>
-                                    <a href="#!" class="text-white">Link 2</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
+                                    <a href="#" class="text-white" OnClick="javascript:window.print()">Imprimer la page</a>
                                 </li>
                             </ul>
                         </div>
