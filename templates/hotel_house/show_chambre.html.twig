@@ -3,45 +3,58 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-	<div class="row">
-        <img src="{{ asset('images/banners/MyShop.jpg') }}" alt="Banner MyShop" class="img-fluid">
-		<div  class="card-img-overlay mt-5 text-center text-danger">
-        <br>
-		    <h4>Expédition à travers le monde 24h/24 et 7j/7</h4>
-        </div>
-	</div>
-    <div>
-        <h2 class="text-center">Nos {{ tabProduits|length }} produits en boutique</h2>
-
-        <section class="row articles">
-        {% for produit in tabProduits %}
-            <article class="col-md-3 mx-auto text-center mb-3 p-3 mt-3 mr-1">
-                <h2>{{ produit.titre }}</h2>
-                <div class="metadata">
-                    {{ produit.prix|number_format(2) }} €
-                </div>
-                <div class="content">
-                    <img class="img-fluid" src="{{ asset('images/produits/' ~ produit.photo) }}" alt="{{ produit.titre }}">
-                    {{ produit.description|raw }}
-                    <br>
-                    {% if produit.stock == 0  %}
-                        <a href="#" class="btn btn-danger">
-                            Indisponible<br>
-                            temporairement<br>
-                        </a>
+	<div>
+		<table class="table table-borderless">
+			<thead>
+				<tr>
+					<td`colspan="3">
+						<h1 class="text-center">Nos {{ tabChambres|length }} types de chambres</h1>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+            {% set switchAffichage = true %}
+            {% for chambre in tabChambres %}
+                <tr class="border-top">
+                {% if switchAffichage %}
+                    <td rowspan="2" class="align-middle">
+                        <span class="fs-2">{{ chambre.titre }}</span><br>
+                        {{ chambre.DescriptionCourte }}
+                    </td>
+                    <td  rowspan="2" class="align-middle">
+                        <img src="{{ asset('images/chambre/' ~ chambre.photo ) }}" alt="chamnre.titre" class="img-fluid" width="200" height="200">
+                    </td>
+                    {% set switchAffichage = false %}
+                {% else %}
+                    <td  rowspan="2" class="align-middle">
+                        <img src="{{ asset('images/chambre/' ~ chambre.photo ) }}" alt="chamnre.titre" class="img-fluid" width="200" height="200">
+                    </td>
+                    <td rowspan="2" class="align-middle">
+                        <span class="fs-2">{{ chambre.titre }}</span><br>
+                        {{ chambre.DescriptionCourte }}
+                    </td>
+                    {% set switchAffichage = true %}
+                {% endif %}
+                    <td class="align-middle">
+                        <a href="{{ path('panier_add', {id: chambre.id }) }}" class="btn btn-info">Plus de détails&nbsp;<i class="fa-solid fa-eye"></i></a>
+                    </td>
+                </tr>
+                <tr class="border-bottom">
+                    <td class="align-middle">
+                    {% if app.user %}
+                        <a href="{{ path('panier_add', {id: chambre.id }) }}" class="btn btn-success">Réserver&nbsp;<i class="fa-solid fa-moon"></i></a>
                     {% else %}
-                        {% if app.user %}
-                            <a href="{{ path('cart_add', {id: produit.id }) }}" class="btn btn-success">Ajouter au panier&nbsp;<i class="fa-solid fa-cart-plus"></i></a>
-                        {% else %}
-                            <a href="{{ path('app_login') }}" class="btn btn-success">
-                                Pour commander <i class="fa-solid fa-basket-shopping"></i><br>
-                                Connectez vous <i class="fa-solid fa-arrow-right-to-bracket"></i><br>
-                            </a>
-                        {% endif %}
+                        <a href="{{ path('app_login') }}" class="btn btn-success">
+                            Pour réserver
+                            <i class="fa-solid fa-moon"></i><br>
+                            Connectez vous
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i><br>
+                        </a>
                     {% endif %}
-                </div>
-            </article>
-        {% endfor %}
-        </section>
-    </div>
+                    </td>
+                </tr>
+            {% endfor %}
+			</tbody>
+		</table>
+	</div>
 {% endblock %}

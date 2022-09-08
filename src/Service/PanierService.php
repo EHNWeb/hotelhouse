@@ -5,7 +5,7 @@ use App\Repository\SliderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class HotelService {
+class PanierService {
     private $rs;
     private $manager;
 

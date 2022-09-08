@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ChambreRepository;
 use App\Repository\SliderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,4 +23,14 @@ class HotelHouseController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/hotel/chambre", name="show_chambre")
+     */
+    public function show_chambre(ChambreRepository $repoChambre, EntityManagerInterface $manager)
+    {
+        $chambres = $repoChambre->findAll();
+        return $this->render('hotel_house/show_chambre.html.twig', [
+            'tabChambres' => $chambres
+        ]);
+    }
 }
