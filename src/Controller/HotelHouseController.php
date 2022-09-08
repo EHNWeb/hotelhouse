@@ -33,4 +33,15 @@ class HotelHouseController extends AbstractController
             'tabChambres' => $chambres
         ]);
     }
+
+    /**
+     * @Route("/hotel/chambre/{id}", name="detail_chambre")
+     */
+    public function detail_chambre($id, ChambreRepository $repoChambre)
+    {
+        $chambre = $repoChambre->find($id);
+        return $this->render('hotel_house/detail_chambre.html.twig', [
+            'chambre' => $chambre
+        ]);
+    }
 }

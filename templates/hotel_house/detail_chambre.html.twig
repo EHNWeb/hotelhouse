@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<table class="table table-borderless">
+        <thead>
+            <tr class="text-center">
+                <td colspan="2">
+                    <h1>Nos chambres "{{ chambre.titre }}"</h1>
+                </td>
+            </tr>
+        </thead>
+			<tbody>
+                <tr>
+                    <td rowspan="3">
+                        <img src="{{ asset('images/chambre/' ~ chambre.photo ) }}" alt="chamnre.titre" class="img-fluid">
+                    </td>
+                    <td>
+                        {{ chambre.DescriptionCourte }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ chambre.DescriptionLongue|raw }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-danger">
+                        {{ chambre.quantite }} chambre(s) disponibles 
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="text-center">
+                    <td colspan="2">
+                    {% if app.user %}
+                        <a href="{{ path('panier_add', {id: chambre.id }) }}" class="btn btn-success">Réserver&nbsp;<i class="fa-solid fa-moon"></i></a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-success">
+                            Pour réserver
+                            <i class="fa-solid fa-moon"></i><br>
+                            Connectez vous
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i><br>
+                        </a>
+                    {% endif %}
+                    </td>
+                </tr>
+            </tfoot>
+		</table>
+{% endblock %}
