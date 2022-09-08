@@ -13,6 +13,7 @@ use App\Entity\Newsletter;
 use App\Entity\Option;
 use App\Entity\Restaurant;
 use App\Entity\Slider;
+use App\Entity\SliderRestaurant;
 use App\Entity\Spa;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -54,7 +55,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Commentaires', 'fa fa-comments', Commentaire::class),
             MenuItem::linkToCrud('Newsletters', 'fa fa-envelope-open-text', Newsletter::class),
             MenuItem::section('Site', 'fa fa-globe'),
-            MenuItem::linkToCrud('Slider', 'fa fa-images', Slider::class),
+            MenuItem::linkToCrud('Slider Accueil', 'fa fa-images', Slider::class),
+            MenuItem::linkToCrud('Slider restaurant', 'fa fa-images', SliderRestaurant::class),
             MenuItem::linkToCrud('Actualités', 'fa fa-newspaper', Actualite::class),
             MenuItem::linkToCrud('Options', 'fa fa-check', Option::class)
         ];
