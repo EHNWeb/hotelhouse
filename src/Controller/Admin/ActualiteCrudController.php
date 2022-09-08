@@ -27,7 +27,7 @@ class ActualiteCrudController extends AbstractCrudController
             ChoiceField::new('categorie', 'Catégorie')->setChoices([
                 'Divers' => 0,
                 'Art' => 1,
-                'Ptotographie' => 2,
+                'Photographie' => 2,
                 'Design' => 3,
                 'Danse' => 4,
                 'Livres' => 5,

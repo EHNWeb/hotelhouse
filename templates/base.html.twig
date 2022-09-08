@@ -55,7 +55,7 @@
                             <a class="nav-link" href="#">Réservation</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Actualité</a>
+                            <a class="nav-link" href="{{ path('show_actualite') }}">Actualité</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">L'hôtel</a>
@@ -305,6 +305,9 @@
                                 </li>
                                 <li>
                                     <a href="#" class="text-white" OnClick="javascript:window.print()">Imprimer la page</a>
+                                </li>
+                                <li>
+                                <a href="{{ path('show_actualite') }}" class="text-white">Actualité</a>
                                 </li>
                             </ul>
                         </div>

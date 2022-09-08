@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Message;
 use App\Form\ContactType;
+use App\Repository\ActualiteRepository;
 use App\Repository\SpaRepository;
 use App\Repository\SliderRepository;
 use App\Repository\ChambreRepository;
@@ -102,4 +103,14 @@ class HotelHouseController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/hotel/actualite", name="show_actualite")
+     */
+    public function show_actualite(ActualiteRepository $repoActualite, EntityManagerInterface $manager)
+    {
+        $actualite = $repoActualite->findAll();
+        return $this->render('hotel_house/show_actualite.html.twig', [
+            'tabActualites' => $actualite
+        ]);
+    }
 }

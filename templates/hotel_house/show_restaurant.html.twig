@@ -24,7 +24,7 @@
         {% set active = 'active' %}
         {% for slider in sliders %}  
 			<div class="carousel-item {{ active }}">
-                <img src="{{ asset('images/slider/' ~ slider.photo ) }}" alt="slider.titre" class="d-block w-100 img-fluid">
+                <img src="{{ asset('images/slider/' ~ slider.photo ) }}" alt="{{ slider.titre }}" class="d-block w-100 img-fluid">
 				<div class="carousel-caption" style="background-color: rgba(0,0,0,.5); color: #fff; !important;">
 					<h3 class="text-white fw-bold">{{ slider.titre }}</h3>
 					<p class="text-white">{{ slider.texte }}</p>

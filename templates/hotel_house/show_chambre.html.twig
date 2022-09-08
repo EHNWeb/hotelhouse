@@ -22,12 +22,12 @@
                         {{ chambre.DescriptionCourte }}
                     </td>
                     <td  rowspan="2" class="align-middle">
-                        <img src="{{ asset('images/chambre/' ~ chambre.photo ) }}" alt="chamnre.titre" class="img-fluid" width="200" height="200">
+                        <img src="{{ asset('images/chambre/' ~ chambre.photo ) }}" alt="{{ chambre.titre }}" class="img-fluid" width="200" height="200">
                     </td>
                     {% set switchAffichage = false %}
                 {% else %}
                     <td  rowspan="2" class="align-middle">
-                        <img src="{{ asset('images/chambre/' ~ chambre.photo ) }}" alt="chamnre.titre" class="img-fluid" width="200" height="200">
+                        <img src="{{ asset('images/chambre/' ~ chambre.photo ) }}" alt="{{ chambre.titre }}" class="img-fluid" width="200" height="200">
                     </td>
                     <td rowspan="2" class="align-middle">
                         <span class="fs-2">{{ chambre.titre }}</span><br>

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<div>
+		<table class="table table-borderless">
+			<thead>
+				<tr>
+					<td`colspan="3">
+						<h1 class="text-center">Nos {{ tabActualites|length }} actualité(s)</h1>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+            {% set switchAffichage = true %}
+            {% set categorieActualite = ['Divers', 'Art', 'Photographie', 'Design', 'Danse', 'Livres'] %}
+            {% for actualite in tabActualites %}
+                <tr class="border-top">
+                {% if switchAffichage %}
+                    <td class="align-middle">
+                        <span class="fs-2">{{ actualite.titre }}</span><br>
+                        {{ categorieActualite[actualite.categorie]|upper }}<br>
+                        {{ actualite.description }}
+                    </td>
+                    <td class="align-middle">
+                        <img src="{{ asset('images/actualite/' ~ actualite.photo ) }}" alt="{{ actualite.titre }}" class="img-fluid" width="200" height="200">
+                    </td>
+                    {% set switchAffichage = false %}
+                {% else %}
+                    <td class="align-middle">
+                        <img src="{{ asset('images/actualite/' ~ actualite.photo ) }}" alt="{{ actualite.titre }}" class="img-fluid" width="200" height="200">
+                    </td>
+                    <td class="align-middle">
+                        <span class="fs-2">{{ actualite.titre }}</span><br>
+                        {{ categorieActualite[actualite.categorie]|upper }}<br>
+                        {{ actualite.description }}
+                    </td>
+                    {% set switchAffichage = true %}
+                {% endif %}
+                    <td class="align-middle">
+                        <a href="{{ actualite.lien }}" target="blank" class="btn btn-info">En savoir plus ...&nbsp;<i class="fa-solid fa-link"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
