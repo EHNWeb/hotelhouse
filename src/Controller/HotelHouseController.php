@@ -3,15 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Message;
-use App\Entity\Newsletter;
+use App\Form\MembreType;
 use App\Form\ContactType;
+use App\Entity\Newsletter;
 use App\Form\NewsletterType;
-use App\Repository\ActualiteRepository;
 use App\Repository\SpaRepository;
+use App\Repository\MembreRepository;
 use App\Repository\SliderRepository;
 use App\Repository\ChambreRepository;
-use App\Repository\NewsletterRepository;
+use App\Repository\ActualiteRepository;
 use App\Repository\SliderSpaRepository;
+use App\Repository\NewsletterRepository;
 use App\Repository\RestaurantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -149,5 +151,37 @@ class HotelHouseController extends AbstractController
         return $this->render('hotel_house/form_newsletter.html.twig', [
             'formNewsletter' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/profil", name="profil_show")
+     */
+    public function show_membre(): Response
+    {
+        return $this->render('hotel_house/show_membre.html.twig'); 
+    }
+
+         /**
+     * @Route("/profil_edit/{id}", name="profil_edit")
+     */
+    public function edit_membre($id, Request $superGlobals, EntityManagerInterface $manager, MembreRepository $repo): Response
+    {
+        $membre = $repo->find($id);
+        $form = $this->createForm(MembreType::class, $membre);
+
+        $form->handleRequest($superGlobals);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $messageForm = "L'utilisateur n° " . $membre->getId() . " a été modifié !";
+            $manager->persist($membre);
+            $manager->flush();
+            $this->addFlash('success', $messageForm);
+            return $this->redirectToRoute('app_logout');
+        }
+
+        return $this->render('hotel_house/membre_form.html.twig', [
+            'formMembre' => $form->createView()
+        ]);
+
     }
 }
