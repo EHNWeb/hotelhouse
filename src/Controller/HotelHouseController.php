@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Message;
+use App\Entity\Newsletter;
 use App\Form\ContactType;
+use App\Form\NewsletterType;
 use App\Repository\ActualiteRepository;
 use App\Repository\SpaRepository;
 use App\Repository\SliderRepository;
 use App\Repository\ChambreRepository;
+use App\Repository\NewsletterRepository;
 use App\Repository\SliderSpaRepository;
 use App\Repository\RestaurantRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -86,8 +89,9 @@ class HotelHouseController extends AbstractController
     {
         $message = new Message();
         $message->setDateEnregistrement(new \DateTime());
-
+        
         $messageForm = "Votre message a bien été pris en compte.";
+
         $form = $this->createForm(ContactType::class, $message);
         $form->handleRequest($superGlobals);
 
@@ -111,6 +115,39 @@ class HotelHouseController extends AbstractController
         $actualite = $repoActualite->findAll();
         return $this->render('hotel_house/show_actualite.html.twig', [
             'tabActualites' => $actualite
+        ]);
+    }
+
+    /**
+     * @Route("/hotel/newsletter", name="form_newsletter")
+     */
+    public function form_newsletter(Request $superGlobals, NewsletterRepository $repoNewsletter, EntityManagerInterface $manager)
+    {
+        $newsletter = new Newsletter();
+        $newsletter->setDateEnregistrement(new \DateTime());
+        
+        $messageForm = "Votre inscription a bien été prise en compte.";
+
+        $form = $this->createForm(NewsletterType::class, $newsletter);
+        $form->handleRequest($superGlobals);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $verifInscription = $repoNewsletter->findOneBy(['email'=> $newsletter->getEmail()]);
+            if (!$verifInscription){
+                $messageForm = "Votre inscription a bien été prise en compte.";
+                $newsletter->setSouscription(true);
+                $manager->persist($newsletter);
+                $manager->flush();
+                $this->addFlash('success', $messageForm);
+            } else {
+                $messageForm = "Vous êtes déjà inscrit.";
+                $this->addFlash('failed', $messageForm);
+            }
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('hotel_house/form_newsletter.html.twig', [
+            'formNewsletter' => $form->createView()
         ]);
     }
 }

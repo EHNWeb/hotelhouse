@@ -5,6 +5,13 @@
 {% endblock %}
 
 {% block body %}
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success text-center">{{ message }}</div>
+	{% endfor %}
+    {% for message in app.flashes('failed') %}
+		<div class="alert alert-danger text-center">{{ message }}</div>
+	{% endfor %}
+    
 	<!-- Carousel wrapper -->
 	<div id="carouselAccueil" class="carousel slide carousel-fade" data-bs-ride="carousel"  data-bs-interval="5000">
 		<div class="carousel-indicators">
