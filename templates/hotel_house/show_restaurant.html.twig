@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	HotelHouse !
+{% endblock %}
+
+{% block body %}
+	<!-- Carousel wrapper -->
+	<div id="carouselRestaurant" class="carousel slide carousel-fade" data-bs-ride="carousel"  data-bs-interval="5000">
+		<div class="carousel-indicators">
+        {% set flag = 'true'%}
+        {% set ordreSlide = 1 %}
+        {% for slider in sliders %}
+            {% if flag %}
+		    	<button type="button" data-bs-target="#carouselRestaurant" data-bs-slide-to="{{ ordreSlide - 1 }}" class="active" aria-current="true" aria-label="Slide {{ ordreSlide }}"></button>
+            {% else %}
+                <button type="button" data-bs-target="#carouselRestaurant" data-bs-slide-to="{{ ordreSlide - 1 }}" aria-label="Slide {{ ordreSlide }}"></button>
+        {% endif %}
+            {% set flag = 'false' %}
+            {% set ordreSlide = ordreSlide + 1 %}
+        {% endfor %}
+		</div>
+		<div class="carousel-inner">
+        {% set active = 'active' %}
+        {% for slider in sliders %}  
+			<div class="carousel-item {{ active }}">
+                <img src="{{ asset('images/slider/' ~ slider.photo ) }}" alt="slider.titre" class="d-block w-100 img-fluid">
+				<div class="carousel-caption" style="background-color: rgba(0,0,0,.5); color: #fff; !important;">
+					<h3 class="text-white fw-bold">{{ slider.titre }}</h3>
+					<p class="text-white">{{ slider.texte }}</p>
+				</div>
+			</div>
+             {% set active = '' %}
+        {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselRestaurant" data-bs-slide="prev">
+            <span  style="background-color: rgba(0,0,0,.5); color: #fff; !important;" aria-hidden="true"><i class="fa-solid fa-backward fa-2x"></i></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselRestaurant" data-bs-slide="next">
+            <span  style="background-color: rgba(0,0,0,.5); color: #fff; !important;" aria-hidden="true"><i class="fa-solid fa-forward fa-2x"></i></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+<!-- Carousel wrapper -->
+<br><br>
+<!-- Main -->
+<div class="text-center">
+    <table class="table table-borderless">
+        <tbody>
+        {% for restaurant in tabRestaurants %}
+            <tr class="fs-2">
+                <td>{{ restaurant.titre }}</td>
+            </tr>
+            <tr class="fs-6">
+                <td>{{ restaurant.DescriptionCourte }}</td>
+            </tr>
+            <tr class="fs-6">
+                <td>{{ restaurant.description|raw }}</td>
+            </tr>
+            <tr>
+                <td><a href="{{ asset('images/restaurant/' ~ restaurant.carte) }}" target="_blank" class="text-info"><i class="fa-solid fa-eye">  <i class="fa-solid fa-download"></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="border-bottom">
+                <td class="align-middle">
+                {% if app.user %}
+                    <a href="#" class="btn btn-success">Réserver une table &nbsp;<i class="fa-solid fa-utensils"></i></a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-success">
+                        Pour réserver
+                        <i class="fa-solid fa-moon"></i><br>
+                        Connectez vous
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i><br>
+                    </a>
+                {% endif %}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<!-- Main -->
+
+{% endblock %}

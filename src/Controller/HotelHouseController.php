@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Repository\ChambreRepository;
+use App\Repository\RestaurantRepository;
 use App\Repository\SliderRepository;
+use App\Repository\SliderRestaurantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,4 +46,18 @@ class HotelHouseController extends AbstractController
             'chambre' => $chambre
         ]);
     }
+
+     /**
+     * @Route("/hotel/restaurant", name="show_restaurant")
+     */
+    public function show_restaurant(SliderRestaurantRepository $repoSliderRestaurant, RestaurantRepository $repoRestaurant, EntityManagerInterface $manager): Response
+    {
+        $sliders = $repoSliderRestaurant->findBy(array(), array('ordre' => 'ASC'));
+        $restaurant = $repoRestaurant->findAll();
+        return $this->render('hotel_house/show_restaurant.html.twig', [
+            'sliders' => $sliders,
+            'tabRestaurants' => $restaurant
+        ]);
+    }
+
 }
