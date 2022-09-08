@@ -1,17 +1,130 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="text-center">
+    <h1>Complétez le formulaire d'inscription</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
+    {{ form_start(registrationForm, {
+            attr: {
+                novalidate: 'novalidate'
+            }
+        })
+    }}
+    <table class="table table-borderless">
+        <tr>
+            <td colspan="2">&nbsp;</td>
+            <td class="fw-bold" colspan="2">
+                {{ form_label(registrationForm.pseudo, 'Pseudo')}}
+            </td>
+            <td class="fw-bold" colspan="2">
+                {{ form_label(registrationForm.plainPassword, 'Mot de passe')}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+            <td class="bg-secondary bg-opacity-10">
+                &nbsp;<i class="fa-solid fa-user fa-2x"></i>&nbsp;
+            </td>
+            <td>
+                {{ form_widget(registrationForm.pseudo, {
+                    attr: {
+                        placeholder: "Votre pseudo"
+                        }
+                }) }}
+            </td>
+            <td class="bg-secondary bg-opacity-10">
+                &nbsp;<i class="fa-solid fa-key fa-2x"></i>&nbsp;
+            </td>
+            <td>
+                {{ form_widget(registrationForm.plainPassword, {
+                    attr: {
+                        placeholder: "Votre mot de passe"
+                        }
+                }) }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+            <td class="fw-bold" colspan="2">
+                {{ form_label(registrationForm.email, 'E-mail')}}
+            </td>
+            <td class="fw-bold" colspan="2">
+                {{ form_label(registrationForm.telephone, 'Téléphone')}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">&nbsp;</td>
+            <td class="bg-secondary bg-opacity-10">
+                &nbsp;<i class="fa-solid fa-at fa-2x"></i>&nbsp;
+            </td>
+            <td>
+                {{ form_widget(registrationForm.email, {
+                    attr: {
+                        placeholder: "Votre e-mail"
+                        }
+                }) }}
+            </td>
+            <td class="bg-secondary bg-opacity-10">
+                &nbsp;<i class="fa-solid fa-phone fa-2x"></i>&nbsp;
+            </td>
+            <td>
+                {{ form_widget(registrationForm.telephone, {
+                    attr: {
+                        placeholder: "Votre n° de téléphone"
+                        }
+                }) }}
+            </td>
+        </tr>
+        <tr>
+            <td class="fw-bold" colspan="2">
+                {{ form_label(registrationForm.civilite, 'Civilité')}}
+            </td>
+            <td class="fw-bold" colspan="2">
+                {{ form_label(registrationForm.nom, 'Nom')}}
+            </td>
+            <td class="fw-bold" colspan="2">
+                {{ form_label(registrationForm.prenom, 'Prénom')}}
+            </td>
+        </tr>
+        <tr>
+            <td class="bg-secondary bg-opacity-10">
+                &nbsp;<i class="fa-solid fa-person-half-dress fa-2x"></i>&nbsp;
+            </td>
+            <td>
+                {{ form_widget(registrationForm.civilite) }}
+            </td>
+            <td class="bg-secondary bg-opacity-10">
+                &nbsp;<i class="fa-solid fa-pen fa-2x"></i>&nbsp;
+            </td>
+            <td>
+                {{ form_widget(registrationForm.nom, {
+                    attr: {
+                        placeholder: "Votre nom"
+                        }
+                }) }}
+            </td>
+            <td class="bg-secondary bg-opacity-10">
+                &nbsp;<i class="fa-solid fa-pen fa-2x"></i>&nbsp;
+            </td>
+            <td>
+                {{ form_widget(registrationForm.prenom, {
+                    attr: {
+                        placeholder: "Votre prénom"
+                        }
+                }) }}
+            </td>
+        </tr>
+    </table>
+    </div>
+    <div class="text-center">
+        {{ form_label(registrationForm.agreeTerms, 'Cochez la case pour accepter nos conditions de ventes.')}}
+        &nbsp;
+        {{form_widget(registrationForm.agreeTerms)}}
+        <br><br>
+        <button type="submit" class="btn btn-primary mt-2">S'inscrire</button>
+    </div>
     {{ form_end(registrationForm) }}
+</div>
 {% endblock %}
