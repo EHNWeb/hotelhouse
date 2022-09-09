@@ -94,6 +94,28 @@ class PanierService {
         $session->set('spa', $spa);
     }
 
+    public function addRestaurant($id){
+        // On va créer une SESSION grâce à la classe RequestStack
+        $session = $this->rs->getSession();
+        $stock = $this->repoRestaurant->find($id)->getQuantite();
+
+        // On récupère l'attribut de SESSION cart s'il existe, sinon , on récupère un tableau vide
+        $restaurant = $session->get('restaurant', []);
+        // Le tableau cart contient les quantités commandées des produits
+
+        // Si le produit existe déjà dans le panier, on incrémente la quantité
+        if (!empty($restaurant[$id])) {
+            if ($restaurant[$id] < $stock) {
+                $restaurant[$id]++;
+            }
+        } else {
+            // l'index du tableau cart est l'id du produit
+            $restaurant[$id] = 1;
+        }
+        // Je sauvegarde l'état de monm panier à l'attribut de session 'cart'
+        $session->set('restaurant', $restaurant);
+    }
+
     public function removeChambre($id) {
         $session = $this->rs->getSession();
         $chambre = $session->get('chambre', []);
@@ -120,6 +142,19 @@ class PanierService {
         $session->set('spa', $spa);
     }
     
+    public function removeRestaurant($id) {
+        $session = $this->rs->getSession();
+        $restaurant = $session->get('restaurant', []);
+
+        // Si le produit existe dans le panier, on le supprime du tableau $cart via unset()
+        if (!empty($restaurant[$id])) {
+            unset($restaurant[$id]);
+        }
+
+        // On sauvegarde l'état du panier
+        $session->set('restaurant', $restaurant);
+    }
+
     public function decrementChambre($id) {
         // On va créer une SESSION grâce à la classe RequestStack
         $session = $this->rs->getSession();
@@ -162,6 +197,27 @@ class PanierService {
         $session->set('spa', $spa);
     }
 
+    public function decrementRestaurant($id) {
+        // On va créer une SESSION grâce à la classe RequestStack
+        $session = $this->rs->getSession();
+
+        // On récupère l'attribut de SESSION cart s'il existe, sinon , on récupère un tableau vide
+        $restaurant = $session->get('restaurant', []);
+        // Le tableau cart contient les quantités commandées des produits
+
+        // Si le produit existe déjà dans le panier, on incrémente la quantité
+        if (!empty($restaurant[$id])) {
+            if ($restaurant[$id] > 1){
+                $restaurant[$id]--;
+            } else {
+                unset($restaurant[$id]);
+            }
+        }
+
+        // Je sauvegarde l'état de monm panier à l'attribut de session 'cart'
+        $session->set('restaurant', $restaurant);
+    }
+
     public function emptyChambre()
     {
         $session = $this->rs->getSession();
@@ -172,6 +228,12 @@ class PanierService {
     {
         $session = $this->rs->getSession();
         $session->remove('spa');
+    }
+
+    public function emptyRestaurant()
+    {
+        $session = $this->rs->getSession();
+        $session->remove('restaurant');
     }
 
     public function getChambreWithData()
@@ -232,10 +294,40 @@ class PanierService {
         return $spaWithData;
     }
 
+    public function getRestaurantWithData()
+    {
+        // On recupère la SESSION
+        $session = $this->rs->getSession();
+        $restaurant = $session->get('restaurant', []);
+
+        // Quantité totale du panier
+        $quantityPanier = 0;
+
+        // on crée un nouveau tableau qui contiendra des objets Product et les quantités de chauque OBJET
+        $restaurantWithData = [];
+
+        // $cartWithData est un tableau multidimensionnel:
+        // Pour chaque ID qui se trouve dans le panier, nous allons créer un nouveau tableau dans $cartWithData qui contiendra 2 cases:
+        // Product, Quantity
+        foreach ($restaurant as $id => $quantity) {
+            // On créer une nouvelle case dans le tableau $cartWithData
+            $restaurantWithData[] = [
+                'restaurant' => $this->repoRestaurant->find($id),
+                'quantite' => $quantity
+            ];
+            $quantityPanier += $quantity;
+        }
+
+        $session->set('totalrestaurantQuantity', $quantityPanier);
+
+        return $restaurantWithData;
+    }
+
     public function getTotalPanier()
     {
         $session = $this->rs->getSession();
         $chambreWithData = $this->getChambreWithData();
+        $restaurantWithData = $this->getRestaurantWithData();
         $spaWithData = $this->getSpaWithData();
 
         // Pour chaque produit dans mon panier, j erécupère le sous total
@@ -250,6 +342,10 @@ class PanierService {
         foreach ($spaWithData as $item) {
             $totalItem = $item['spa']->getMontant() * $item['quantite'];
             $totalPanier += $totalItem;
+            $quantitePanier += $item['quantite'];
+        }
+
+        foreach ($restaurantWithData as $item) {
             $quantitePanier += $item['quantite'];
         }
 

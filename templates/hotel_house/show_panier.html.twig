@@ -3,11 +3,12 @@
 {% block title %}HotelHouse - Panier{% endblock %}
 
 {% block body %}
+
     {% if app.user is not null %}
      <h1 class="text-center">Votre panier</h1>
 
     {# On test si le panier est vide #}
-    {% if panierChambres or panierSpas %}
+    {% if panierChambres or panierSpas or panierRestaurants %}
 
         <div class="text-center">
             <a href="{{ path('panier_delete') }}" class="btn btn-danger">Vider la panier <i class="fa-solid fa-trash-can"></i></a>
@@ -96,6 +97,39 @@
             {% endfor %}
         {% else %}
                 <tr><td colspan="9" class="text-center text-danger">Pas de réservation de spa(s) !</td></tr>
+        {% endif %}
+
+        {# On test si le panier est vide #}
+        {% if panierRestaurants %}
+
+            {% for item in panierRestaurants %}
+                <tr>
+                    <td class="align-middle">{{ item.restaurant.id }}</td>
+                    <td>
+                        Restaurant "{{ item.restaurant.titre }}"<br>
+                        <a href="{{ asset('images/restaurant/' ~ item.restaurant.carte) }}" target="_blank">Voir la fiche</a>
+                        </td>
+                    <td class="align-middle">À la carte</td>
+                    <td class="align-middle">
+                        <a href="{{ path('restaurant_decrease', {id: item.restaurant.id}) }}" class="text-info"><i class="fa-solid fa-minus"></i></a>
+                    </td>
+                    <td class="align-middle">{{ item.quantite }}</td>
+                    <td class="align-middle">
+                        <a href="{{ path('restaurant_add', {id: item.restaurant.id}) }}" class="text-info"><i class="fa-solid fa-plus"></i></a>
+                    </td>
+                    <td class="align-middle">À la carte</td>
+                    <td class="align-middle">
+                        <a href="{{ path('show_restaurant', {id: item.restaurant.id }) }}" class="text-info"><i class="fa-solid fa-eye"></i></a>
+                    </td>
+                    <td class="align-middle">
+                        <a href="{{ path('restaurant_remove', {id: item.restaurant.id}) }}" class="text-danger">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
+                    </td> #}
+                </tr>
+            {% endfor %}
+        {% else %}
+                <tr><td colspan="9" class="text-center text-danger">Pas de réservation de restaurant(s) !</td></tr>
         {% endif %}
             </tbody>
             <tfoot>

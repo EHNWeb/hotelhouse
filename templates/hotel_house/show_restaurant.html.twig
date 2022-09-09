@@ -58,16 +58,13 @@
             <tr class="fs-6">
                 <td>{{ restaurant.description|raw }}</td>
             </tr>
-            <tr class="border-bottom">
+            <tr>
                 <td><a href="{{ asset('images/restaurant/' ~ restaurant.carte) }}" target="_blank" class="btn btn-info">Voir la carte&nbsp;où là télécharger&nbsp;<i class="fa-solid fa-eye">  <i class="fa-solid fa-download"></a></td>
             </tr>
-        {% endfor %}
-        </tbody>
-        <tfoot>
-            <tr>
-                <td class="align-middle">
+            <tr class="border-bottom">
+                <td>
                 {% if app.user %}
-                    <a href="#" class="btn btn-success">Réserver une table &nbsp;<i class="fa-solid fa-utensils"></i></a>
+                    <a href="{{ path('restaurant_add', {id: restaurant.id }) }}" class="btn btn-success">Réserver une table&nbsp;{{ restaurant.titre }}&nbsp;<i class="fa-solid fa-utensils"></i></a>
                 {% else %}
                     <a href="{{ path('app_login') }}" class="btn btn-success">
                         Pour réserver
@@ -78,7 +75,8 @@
                 {% endif %}
                 </td>
             </tr>
-        </tfoot>
+        {% endfor %}
+        </tbody>
     </table>
 </div>
 <!-- Main -->
