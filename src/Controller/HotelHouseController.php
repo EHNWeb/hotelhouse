@@ -205,7 +205,7 @@ class HotelHouseController extends AbstractController
     }
 
     /**
-     * @Route("/hotel/avis", name="form_avis")
+     * @Route("/hotel/avis", name="show_avis")
      * @Route("/hotel/avis/{id}", name="form_avis")
      */
     public function form_avis($id = null, Request $superGlobals, CommentaireRepository $repoCommentaire, CategorieRepository $repoCategorie, MembreRepository $repoMembre, EntityManagerInterface $manager)
