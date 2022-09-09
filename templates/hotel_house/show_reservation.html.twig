@@ -103,4 +103,41 @@
             </tfoot>
         </table>
     </div>
+    <div class="text-center">
+    <table class="table table-borderless">
+        <tbody>
+        {% for spa in tabSpas %}
+            <tr class="fs-2 border-top">
+                <td>{{ spa.titre }}</td>
+            </tr>
+            <tr class="fs-6">
+                <td>{{ spa.DescriptionCourte }}</td>
+            </tr>
+            <tr class="fs-6">
+                <td>{{ spa.description|raw }}</td>
+            </tr>
+            <tr class="fs-6">
+                <td>Prix: {{ spa.montant|number_format(2) }} € / séance</td>
+            </tr>
+            <tr>
+                <td><a href="{{ asset('images/spa/' ~ spa.FicheSoin) }}" target="_blank" class="btn btn-info">Voir la fiche de soin&nbsp;où là télécharger&nbsp;<i class="fa-solid fa-eye">  <i class="fa-solid fa-download"></a></td>
+            </tr>
+            <tr class="border-bottom">
+                <td>
+                {% if app.user %}
+                    <a href="{{ path('spa_add', {id: spa.id }) }}" class="btn btn-success">Réserver un soin&nbsp;{{ spa.titre }}&nbsp;<i class="fa-solid fa-spa"></i></a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-success">
+                        Pour réserver
+                        <i class="fa-solid fa-moon"></i><br>
+                        Connectez vous
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i><br>
+                    </a>
+                {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

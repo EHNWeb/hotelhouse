@@ -188,13 +188,15 @@ class HotelHouseController extends AbstractController
     /**
      * @Route("/hotel/reservation", name="show_reservation")
      */
-    public function show_reservation(ChambreRepository $repoChambre, RestaurantRepository $repoRestaurant, EntityManagerInterface $manager)
+    public function show_reservation(ChambreRepository $repoChambre, RestaurantRepository $repoRestaurant, SpaRepository $repoSpa, EntityManagerInterface $manager)
     {
         $chambres = $repoChambre->findAll();
         $restaurants = $repoRestaurant->findAll();
+        $spas = $repoSpa->findAll();
         return $this->render('hotel_house/show_reservation.html.twig', [
             'tabChambres' => $chambres,
-            'tabRestaurants' => $restaurants
+            'tabRestaurants' => $restaurants,
+            'tabSpas' => $spas
         ]);
     }
 }
