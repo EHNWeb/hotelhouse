@@ -17,10 +17,12 @@ class PanierController extends AbstractController
     {
 
         $chambreWithData = $cs->getChambreWithData();
+        $spaWithData = $cs->getSpaWithData();
         $totalPanier = $cs->getTotalPanier();
 
         return $this->render('hotel_house/show_panier.html.twig', [
             'panierChambres' => $chambreWithData,
+            'panierSpas' => $spaWithData,
             'totalPanier' => $totalPanier,
         ]);
     }
@@ -37,11 +39,31 @@ class PanierController extends AbstractController
     }
 
     /**
+     * @Route("/spa/add/{id}", name="spa_add")
+     */
+    public function addSpa($id, PanierService $cs): Response
+    {
+
+        $cs->addSpa($id);
+
+        return $this->redirectToRoute('app_panier');
+    }
+
+    /**
      * @Route("/chambre/remove/{id}", name="chambre_remove")
      */
     public function removeChambre($id, PanierService $cs)
     {
         $cs->removeChambre($id);
+        return $this->redirectToRoute('app_panier');
+    }
+
+    /**
+     * @Route("/spa/remove/{id}", name="spa_remove")
+     */
+    public function removeSpa($id, PanierService $cs)
+    {
+        $cs->removeSpa($id);
         return $this->redirectToRoute('app_panier');
     }
 
@@ -57,11 +79,32 @@ class PanierController extends AbstractController
     }
 
     /**
+     * @Route("/spa/decrease/{id}", name="spa_decrease")
+     */
+    public function decreaseSpa($id, PanierService $cs): Response
+    {
+
+        $cs->decrementSpa($id);
+
+        return $this->redirectToRoute('app_panier');
+    }
+
+    /**
      * @Route("/chambre/delete", name="chambre_delete")
      */
     public function deleteChambre(PanierService $cs): Response
     {
        $cs->emptyChambre();
+
+       return $this->redirectToRoute('app_panier');
+    }
+
+    /**
+     * @Route("/spa/delete", name="spa_delete")
+     */
+    public function deleteSpa(PanierService $cs): Response
+    {
+       $cs->emptySpa();
 
        return $this->redirectToRoute('app_panier');
     }
@@ -73,10 +116,12 @@ class PanierController extends AbstractController
     {
 
         $chambreWithData = $cs->getChambreWithData();
+        $spaWithData = $cs->getSpaWithData();
         $totalPanier = $cs->getTotalPanier();
 
         return $this->render('myshop/show_order.html.twig', [
-            'items' => $chambreWithData,
+            'chambres' => $chambreWithData,
+            'spas' => $spaWithData,
             'totalPanier' => $totalPanier,
         ]);
     }
@@ -91,5 +136,16 @@ class PanierController extends AbstractController
        $cs->emptyChambre();
 
        return $this->redirectToRoute('app_order');
+    }
+
+    /**
+     * @Route("/panier/delete", name="panier_delete")
+     */
+    public function deletepanier(PanierService $cs): Response
+    {
+       $cs->emptyChambre();
+       $cs->emptySpa();
+
+       return $this->redirectToRoute('app_panier');
     }
 }

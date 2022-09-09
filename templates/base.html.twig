@@ -71,9 +71,9 @@
                     <ul class="navbar-nav me-auto">
                 {% if app.user is not null %}    
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Panier&nbsp;<i class="fa-solid fa-basket-shopping"></i></a>
+                            <a class="nav-link" href="{{ path('app_panier') }}">Panier&nbsp;<i class="fa-solid fa-basket-shopping"></i></a>
                         </li>
-                    {% set nbProducts = app.session.get('totalQuantity') %}
+                    {% set nbProducts = app.session.get('quantitePanier') %}
                     {% if nbProducts > 0 %}
                         <li><h6><span class="badge rounded-pill bg-danger">{{ nbProducts }}</span></h6></li>
                     {% endif %}
@@ -85,7 +85,7 @@
                         <li><h6><span class="badge rounded-pill bg-success">{{ totalCart|number_format(2) }} €</span></h6></li>
                     {% endif %}
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Mes commandes&nbsp;<i class="fa-solid fa-cart-shopping"></i></a>
+                            <a class="nav-link" href="{{ path('app_panier') }}">Mes commandes&nbsp;<i class="fa-solid fa-cart-shopping"></i></a>
                         </li>
                     </ul>
 

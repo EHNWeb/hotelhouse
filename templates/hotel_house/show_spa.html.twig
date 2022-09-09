@@ -67,7 +67,7 @@
             <tr class="border-bottom">
                 <td>
                 {% if app.user %}
-                    <a href="#" class="btn btn-success">Réserver un soin&nbsp;<i class="fa-solid fa-spa"></i></a>
+                    <a href="{{ path('spa_add', {id: spa.id }) }}" class="btn btn-success">Réserver un soin&nbsp;{{ spa.titre }}&nbsp;<i class="fa-solid fa-spa"></i></a>
                 {% else %}
                     <a href="{{ path('app_login') }}" class="btn btn-success">
                         Pour réserver
