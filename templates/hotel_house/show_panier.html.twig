@@ -5,10 +5,8 @@
 {% block body %}
     {% if app.user is not null %}
      <h1 class="text-center">Votre panier</h1>
-    <pre>
-        {{ dump() }}
-    </pre>
-        {# On test si le panier est vide #}
+
+    {# On test si le panier est vide #}
     {% if panierChambres or panierSpas %}
 
         <div class="text-center">
