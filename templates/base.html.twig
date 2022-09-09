@@ -61,11 +61,11 @@
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">L'hôtel</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ path('hotel_contact') }}">Contact / Accès</a>
-                                {% if app.user is not null %}
+                                {# {% if app.user is not null %}
                                     <a class="dropdown-item" href="{{ path('form_avis', {id: app.user.id}) }}">Avis</a>
                                 {% else %}
                                     <a class="dropdown-item" href="{{ path('form_avis') }}">Avis</a>
-                                {% endif %}
+                                {% endif %} #}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ path('hotel_contact') }}">Qui sommes-nous ?</a>
                             </div>
