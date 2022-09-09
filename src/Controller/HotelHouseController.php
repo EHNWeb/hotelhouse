@@ -205,18 +205,22 @@ class HotelHouseController extends AbstractController
     }
 
     /**
-     * @Route("/hotel/avis", name="show_avis")
-     * @Route("/hotel/avis/{id}", name="form_avis")
+     * @Route("/hotel/avis", name="form_avis")
      */
-    public function form_avis($id = null, Request $superGlobals, CommentaireRepository $repoCommentaire, CategorieRepository $repoCategorie, MembreRepository $repoMembre, EntityManagerInterface $manager)
+    public function form_avis(Request $superGlobals, CommentaireRepository $repoCommentaire, CategorieRepository $repoCategorie, MembreRepository $repoMembre, EntityManagerInterface $manager)
     {
         $commentaires = $repoCommentaire->findAll();
         $categories = $repoCategorie->findAll();
 
         $commentaire = new Commentaire();
         $commentaire->setDateEnregistrement(new \DateTime());
-        if ($id) {
-            $commentaire->setIdMembre($repoMembre->find($id));
+        if ($this->getUser()) {
+            $commentaire->setIdMembre($repoMembre->find($this->getUser()));
+        } else {
+            return $this->render('hotel_house/form_avis.html.twig', [
+                'tabCommentaires' => $commentaires,
+                'tabCategories' => $categories
+            ]);
         }
         
         $messageForm = "Votre avis a bien été pris en compte.";
