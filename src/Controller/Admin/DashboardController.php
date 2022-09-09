@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Actualite;
+use App\Entity\Categorie;
 use App\Entity\Chambre;
 use App\Entity\CommandeChambre;
 use App\Entity\CommandeRestaurant;
@@ -62,7 +63,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Slider restaurant', 'fa fa-images', SliderRestaurant::class),
             MenuItem::linkToCrud('Slider spa', 'fa fa-images', SliderSpa::class),
             MenuItem::linkToCrud('Actualités', 'fa fa-newspaper', Actualite::class),
-            MenuItem::linkToCrud('Options', 'fa fa-check', Option::class)
+            MenuItem::linkToCrud('Options', 'fa fa-check', Option::class),
+            MenuItem::linkToCrud('Catégorie', 'fa fa-bars', Categorie::class),
         ];
 
     }

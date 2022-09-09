@@ -2,16 +2,19 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentaire;
 use App\Entity\Message;
 use App\Form\MembreType;
 use App\Form\ContactType;
 use App\Entity\Newsletter;
+use App\Form\CommentaireType;
 use App\Form\NewsletterType;
 use App\Repository\SpaRepository;
 use App\Repository\MembreRepository;
 use App\Repository\SliderRepository;
 use App\Repository\ChambreRepository;
 use App\Repository\ActualiteRepository;
+use App\Repository\CommentaireRepository;
 use App\Repository\SliderSpaRepository;
 use App\Repository\NewsletterRepository;
 use App\Repository\RestaurantRepository;
@@ -197,6 +200,32 @@ class HotelHouseController extends AbstractController
             'tabChambres' => $chambres,
             'tabRestaurants' => $restaurants,
             'tabSpas' => $spas
+        ]);
+    }
+
+    /**
+     * @Route("/hotel/avis/{id}", name="form_avis")
+     */
+    public function form_avis($id, Request $superGlobals, CommentaireRepository $repoCommentaire, MembreRepository $repoMembre, EntityManagerInterface $manager)
+    {
+        $commentaire = new Commentaire();
+        $commentaire->setDateEnregistrement(new \DateTime());
+        $commentaire->setIdMembre($repoMembre->find($id));
+        
+        $messageForm = "Votre avis a bien été pris en compte.";
+
+        $form = $this->createForm(CommentaireType::class, $commentaire);
+        $form->handleRequest($superGlobals);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($commentaire);
+            $manager->flush();
+            $this->addFlash('success', $messageForm);
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('hotel_house/form_avis.html.twig', [
+            'formAvis' => $form->createView()
         ]);
     }
 }
