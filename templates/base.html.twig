@@ -63,6 +63,8 @@
                                 <a class="dropdown-item" href="{{ path('hotel_contact') }}">Contact / Accès</a>
                                 {% if app.user is not null %}
                                     <a class="dropdown-item" href="{{ path('form_avis', {id: app.user.id}) }}">Avis</a>
+                                {% else %}
+                                    <a class="dropdown-item" href="{{ path('form_avis') }}">Avis</a>
                                 {% endif %}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ path('hotel_contact') }}">Qui sommes-nous ?</a>

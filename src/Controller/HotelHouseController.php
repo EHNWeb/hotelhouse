@@ -14,6 +14,7 @@ use App\Repository\MembreRepository;
 use App\Repository\SliderRepository;
 use App\Repository\ChambreRepository;
 use App\Repository\ActualiteRepository;
+use App\Repository\CategorieRepository;
 use App\Repository\CommentaireRepository;
 use App\Repository\SliderSpaRepository;
 use App\Repository\NewsletterRepository;
@@ -204,13 +205,19 @@ class HotelHouseController extends AbstractController
     }
 
     /**
+     * @Route("/hotel/avis", name="form_avis")
      * @Route("/hotel/avis/{id}", name="form_avis")
      */
-    public function form_avis($id, Request $superGlobals, CommentaireRepository $repoCommentaire, MembreRepository $repoMembre, EntityManagerInterface $manager)
+    public function form_avis($id = null, Request $superGlobals, CommentaireRepository $repoCommentaire, CategorieRepository $repoCategorie, MembreRepository $repoMembre, EntityManagerInterface $manager)
     {
+        $commentaires = $repoCommentaire->findAll();
+        $categories = $repoCategorie->findAll();
+
         $commentaire = new Commentaire();
         $commentaire->setDateEnregistrement(new \DateTime());
-        $commentaire->setIdMembre($repoMembre->find($id));
+        if ($id) {
+            $commentaire->setIdMembre($repoMembre->find($id));
+        }
         
         $messageForm = "Votre avis a bien été pris en compte.";
 
@@ -225,7 +232,9 @@ class HotelHouseController extends AbstractController
         }
 
         return $this->render('hotel_house/form_avis.html.twig', [
-            'formAvis' => $form->createView()
+            'formAvis' => $form->createView(),
+            'tabCommentaires' => $commentaires,
+            'tabCategories' => $categories
         ]);
     }
 }
