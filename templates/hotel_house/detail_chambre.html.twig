@@ -13,7 +13,7 @@
         </thead>
 			<tbody>
                 <tr>
-                    <td rowspan="3">
+                    <td rowspan="4">
                         <img src="{{ asset('images/chambre/' ~ chambre.photo ) }}" alt="chamnre.titre" class="img-fluid">
                     </td>
                     <td>
@@ -23,6 +23,11 @@
                 <tr>
                     <td>
                         {{ chambre.DescriptionLongue|raw }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Prix: {{ chambre.prix|number_format(2) }} € / jour
                     </td>
                 </tr>
                 <tr>

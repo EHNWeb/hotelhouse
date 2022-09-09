@@ -49,7 +49,7 @@
     <table class="table table-borderless">
         <tbody>
         {% for restaurant in tabRestaurants %}
-            <tr class="fs-2">
+            <tr class="fs-2 border-top">
                 <td>{{ restaurant.titre }}</td>
             </tr>
             <tr class="fs-6">
@@ -58,13 +58,13 @@
             <tr class="fs-6">
                 <td>{{ restaurant.description|raw }}</td>
             </tr>
-            <tr>
-                <td><a href="{{ asset('images/restaurant/' ~ restaurant.carte) }}" target="_blank" class="text-info"><i class="fa-solid fa-eye">  <i class="fa-solid fa-download"></a></td>
+            <tr class="border-bottom">
+                <td><a href="{{ asset('images/restaurant/' ~ restaurant.carte) }}" target="_blank" class="btn btn-info">Voir la carte&nbsp;où là télécharger&nbsp;<i class="fa-solid fa-eye">  <i class="fa-solid fa-download"></a></td>
             </tr>
         {% endfor %}
         </tbody>
         <tfoot>
-            <tr class="border-bottom">
+            <tr>
                 <td class="align-middle">
                 {% if app.user %}
                     <a href="#" class="btn btn-success">Réserver une table &nbsp;<i class="fa-solid fa-utensils"></i></a>

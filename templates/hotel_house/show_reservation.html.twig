@@ -19,8 +19,7 @@
                 {% if switchAffichage %}
                     <td rowspan="2" class="align-middle">
                         <span class="fs-2">{{ chambre.titre }}</span><br>
-                        {{ chambre.DescriptionCourte }}<br>
-                        Prix: {{ chambre.prix|number_format(2) }} € / jour
+                        {{ chambre.DescriptionCourte }}
                     </td>
                     <td  rowspan="2" class="align-middle">
                         <img src="{{ asset('images/chambre/' ~ chambre.photo ) }}" alt="{{ chambre.titre }}" class="img-fluid" width="200" height="200">
@@ -32,8 +31,7 @@
                     </td>
                     <td rowspan="2" class="align-middle">
                         <span class="fs-2">{{ chambre.titre }}</span><br>
-                        {{ chambre.DescriptionCourte }}<br>
-                        Prix: {{ chambre.prix|number_format(2) }} € / jour
+                        {{ chambre.DescriptionCourte }}
                     </td>
                     {% set switchAffichage = true %}
                 {% endif %}
@@ -59,4 +57,48 @@
 			</tbody>
 		</table>
 	</div>
+    <br><br>
+    <div class="text-center">
+        <table class="table table-borderless">
+        	<thead>
+				<tr>
+					<td`colspan="3">
+						<h1 class="text-center">Notre restaurant</h1>
+					</td>
+				</tr>
+			</thead>
+            <tbody>
+            {% for restaurant in tabRestaurants %}
+                <tr class="fs-2 border-top">
+                    <td>{{ restaurant.titre }}</td>
+                </tr>
+                <tr class="fs-6">
+                    <td>{{ restaurant.DescriptionCourte }}</td>
+                </tr>
+                <tr class="fs-6">
+                    <td>{{ restaurant.description|raw }}</td>
+                </tr>
+                <tr class="border-bottom">
+                    <td><a href="{{ asset('images/restaurant/' ~ restaurant.carte) }}" target="_blank" class="btn btn-info">Voir la carte&nbsp;où là télécharger&nbsp;<i class="fa-solid fa-eye">  <i class="fa-solid fa-download"></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="align-middle">
+                    {% if app.user %}
+                        <a href="#" class="btn btn-success">Réserver une table &nbsp;<i class="fa-solid fa-utensils"></i></a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="btn btn-success">
+                            Pour réserver
+                            <i class="fa-solid fa-moon"></i><br>
+                            Connectez vous
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i><br>
+                        </a>
+                    {% endif %}
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 {% endblock %}
