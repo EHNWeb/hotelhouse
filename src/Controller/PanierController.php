@@ -11,16 +11,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PanierController extends AbstractController
 {
     /**
-     * @Route("/cart", name="app_cart")
+     * @Route("/panier", name="app_panier")
      */
     public function index(PanierService $cs): Response
     {
 
-        $cartWithData = $cs->getCartWithData();
+        $chambreWithData = $cs->getChambreWithData();
         $totalPanier = $cs->getTotalPanier();
 
-        return $this->render('myshop/show_panier.html.twig', [
-            'items' => $cartWithData,
+        return $this->render('hotel_house/show_panier.html.twig', [
+            'panierChambres' => $chambreWithData,
             'totalPanier' => $totalPanier,
         ]);
     }
@@ -31,9 +31,9 @@ class PanierController extends AbstractController
     public function addChambre($id, PanierService $cs): Response
     {
 
-        $cs->add($id);
+        $cs->addChambre($id);
 
-        return $this->redirectToRoute('app_cart');
+        return $this->redirectToRoute('app_panier');
     }
 
     /**
@@ -41,8 +41,8 @@ class PanierController extends AbstractController
      */
     public function removeChambre($id, PanierService $cs)
     {
-        $cs->remove($id);
-        return $this->redirectToRoute('app_cart');
+        $cs->removeChambre($id);
+        return $this->redirectToRoute('app_panier');
     }
 
     /**
@@ -51,19 +51,19 @@ class PanierController extends AbstractController
     public function decreaseChambre($id, PanierService $cs): Response
     {
 
-        $cs->decrement($id);
+        $cs->decrementChambre($id);
 
-        return $this->redirectToRoute('app_cart');
+        return $this->redirectToRoute('app_panier');
     }
 
     /**
-     * @Route("/cart/delete", name="cart_delete")
+     * @Route("/chambre/delete", name="chambre_delete")
      */
     public function deleteChambre(PanierService $cs): Response
     {
-       $cs->empty();
+       $cs->emptyChambre();
 
-       return $this->redirectToRoute('app_cart');
+       return $this->redirectToRoute('app_panier');
     }
 
     /**
@@ -72,11 +72,11 @@ class PanierController extends AbstractController
     public function order(PanierService $cs): Response
     {
 
-        $cartWithData = $cs->getCartWithData();
+        $chambreWithData = $cs->getChambreWithData();
         $totalPanier = $cs->getTotalPanier();
 
         return $this->render('myshop/show_order.html.twig', [
-            'items' => $cartWithData,
+            'items' => $chambreWithData,
             'totalPanier' => $totalPanier,
         ]);
     }
@@ -88,7 +88,7 @@ class PanierController extends AbstractController
     {
        $cs->passOrder($id);
 
-       $cs->empty();
+       $cs->emptyChambre();
 
        return $this->redirectToRoute('app_order');
     }

@@ -18,7 +18,14 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class PanierService {
     private $rs;
-    private $repo;
+    private $repoChambre;
+    private $repoRestaurant;
+    private $repoOption;
+    private $repoSpa;
+    private $repoMembre;
+    private $repoCdeChambre;
+    private $repoCdeRestaurant;
+    private $repoCdeSpa;
 
     public function __construct(RequestStack $rs, 
                                 ChambreRepository $repoChambre, 
@@ -46,7 +53,7 @@ class PanierService {
     public function addChambre($id){
         // On va créer une SESSION grâce à la classe RequestStack
         $session = $this->rs->getSession();
-        $stock = $this->repo->find($id)->getStock();
+        $stock = $this->repoChambre->find($id)->getQuantite();
 
         // On récupère l'attribut de SESSION cart s'il existe, sinon , on récupère un tableau vide
         $chambre = $session->get('chambre', []);
@@ -54,15 +61,15 @@ class PanierService {
 
         // Si le produit existe déjà dans le panier, on incrémente la quantité
         if (!empty($chambre[$id])) {
-            if ($cart[$id] < $stock) {
-                $cart[$id]++;
+            if ($chambre[$id] < $stock) {
+                $chambre[$id]++;
             }
         } else {
             // l'index du tableau cart est l'id du produit
             $chambre[$id] = 1;
         }
         // Je sauvegarde l'état de monm panier à l'attribut de session 'cart'
-        $session->set('chambre', $cart);
+        $session->set('chambre', $chambre);
     }
 
     public function removeChambre($id) {
@@ -105,7 +112,7 @@ class PanierService {
         $session->remove('chambre');
     }
 
-    public function getCartWithData()
+    public function getChambreWithData()
     {
         // On recupère la SESSION
         $session = $this->rs->getSession();
@@ -115,15 +122,15 @@ class PanierService {
         $quantityPanier = 0;
 
         // on crée un nouveau tableau qui contiendra des objets Product et les quantités de chauque OBJET
-        $cartWithData = [];
+        $chambreWithData = [];
 
         // $cartWithData est un tableau multidimensionnel:
         // Pour chaque ID qui se trouve dans le panier, nous allons créer un nouveau tableau dans $cartWithData qui contiendra 2 cases:
         // Product, Quantity
         foreach ($chambre as $id => $quantity) {
             // On créer une nouvelle case dans le tableau $cartWithData
-            $cartWithData[] = [
-                'chambre' => $this->repo->find($id),
+            $chambreWithData[] = [
+                'chambre' => $this->repoChambre->find($id),
                 'quantite' => $quantity
             ];
             $quantityPanier += $quantity;
@@ -131,17 +138,17 @@ class PanierService {
 
         $session->set('totalQuantity', $quantityPanier);
 
-        return $cartWithData;
+        return $chambreWithData;
     }
 
     public function getTotalPanier()
     {
         $session = $this->rs->getSession();
-        $cartWithData = $this->getCartWithData();
+        $chambreWithData = $this->getChambreWithData();
 
         // Pour chaque produit dans mon panier, j erécupère le sous total
         $totalPanier = 0;
-        foreach ($cartWithData as $item) {
+        foreach ($chambreWithData as $item) {
             $totalItem = $item['chambre']->getPrix() * $item['quantite'];
             $totalPanier += $totalItem;
         }
@@ -154,7 +161,7 @@ class PanierService {
     public function passOrder($id)
     {
         $session = $this->rs->getSession();
-        $cartWithData = $this->getCartWithData();
+        $chambreWithData = $this->getChambreWithData();
 
         $messageBDD = "La commande a bien été enregistrée.";
         $cdeDateEnregistrement = new \DateTime();
@@ -162,7 +169,7 @@ class PanierService {
         $cdeMembreID = $this->repoMembre->find($id);
 
         // Pour chaque produit dans mon panier, j erécupère le sous total
-        foreach ($cartWithData as $item) {
+        foreach ($chambreWithData as $item) {
 
             $cdeProduitID = $item['produit'];
             $cdeProduitQTY = $item['quantite'];

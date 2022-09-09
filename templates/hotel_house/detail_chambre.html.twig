@@ -35,7 +35,7 @@
                 <tr class="text-center">
                     <td colspan="2">
                     {% if app.user %}
-                        <a href="{{ path('panier_add', {id: chambre.id }) }}" class="btn btn-success">Réserver&nbsp;<i class="fa-solid fa-moon"></i></a>
+                        <a href="{{ path('chambre_add', {id: chambre.id }) }}" class="btn btn-success">Réserver&nbsp;<i class="fa-solid fa-moon"></i></a>
                     {% else %}
                         <a href="{{ path('app_login') }}" class="btn btn-success">
                             Pour réserver
