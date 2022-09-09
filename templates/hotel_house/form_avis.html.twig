@@ -26,7 +26,7 @@
 			{% for commentaire in tabCommentaires %}
 				<tr>
 					<td>{{ commentaire.titre }}</td>
-					<td>{{ tabCategories[commentaire.categorie].titre }}</td>
+					<td>{{ tabCategories[commentaire.categorie - 1].titre }}</td>
 					<td>{{ commentaire.commentaire }}</td>
 					<td>{{ commentaire.DateEnregistrement|date("d M Y à H:m:s") }}</td>
 				</tr>
