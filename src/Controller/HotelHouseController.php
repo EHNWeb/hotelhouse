@@ -25,6 +25,8 @@ use App\Repository\SliderRestaurantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class HotelHouseController extends AbstractController
 {
@@ -62,7 +64,7 @@ class HotelHouseController extends AbstractController
         ]);
     }
 
-     /**
+    /**
      * @Route("/hotel/restaurant", name="show_restaurant")
      */
     public function show_restaurant(SliderRestaurantRepository $repoSliderRestaurant, RestaurantRepository $repoRestaurant, EntityManagerInterface $manager): Response
@@ -87,7 +89,7 @@ class HotelHouseController extends AbstractController
             'tabSpas' => $spa
         ]);
     }
- 
+
     /**
      *@Route("/hotel/contact", name="hotel_contact") 
      */
@@ -95,7 +97,7 @@ class HotelHouseController extends AbstractController
     {
         $message = new Message();
         $message->setDateEnregistrement(new \DateTime());
-        
+
         $messageForm = "Votre message a bien été pris en compte.";
 
         $form = $this->createForm(ContactType::class, $message);
@@ -127,19 +129,19 @@ class HotelHouseController extends AbstractController
     /**
      * @Route("/hotel/newsletter", name="form_newsletter")
      */
-    public function form_newsletter(Request $superGlobals, NewsletterRepository $repoNewsletter, EntityManagerInterface $manager)
+    public function form_newsletter(Request $superGlobals, NewsletterRepository $repoNewsletter, EntityManagerInterface $manager, MailerInterface $mailer)
     {
         $newsletter = new Newsletter();
         $newsletter->setDateEnregistrement(new \DateTime());
-        
+
         $messageForm = "Votre inscription a bien été prise en compte.";
 
         $form = $this->createForm(NewsletterType::class, $newsletter);
         $form->handleRequest($superGlobals);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $verifInscription = $repoNewsletter->findOneBy(['email'=> $newsletter->getEmail()]);
-            if (!$verifInscription){
+            $verifInscription = $repoNewsletter->findOneBy(['email' => $newsletter->getEmail()]);
+            if (!$verifInscription) {
                 $messageForm = "Votre inscription a bien été prise en compte.";
                 $newsletter->setSouscription(true);
                 $manager->persist($newsletter);
@@ -149,6 +151,23 @@ class HotelHouseController extends AbstractController
                 $messageForm = "Vous êtes déjà inscrit.";
                 $this->addFlash('failed', $messageForm);
             }
+
+            // Email
+            $email = (new Email())
+                ->from('hottin.eric@sfr.fr')
+                ->to('eric.hottin@gmail.com')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('Time for Symfony Mailer! test 3')
+                ->text('Sending emails is fun again!')
+                ->html('<p>See Twig integration for better HTML integration!</p>');
+            $mailer->send($email);
+            $messageForm = "Email envoyé.";
+            $this->addFlash('success', $messageForm);
+            //
+
             return $this->redirectToRoute('home');
         }
 
@@ -162,10 +181,10 @@ class HotelHouseController extends AbstractController
      */
     public function show_membre(): Response
     {
-        return $this->render('hotel_house/show_membre.html.twig'); 
+        return $this->render('hotel_house/show_membre.html.twig');
     }
 
-         /**
+    /**
      * @Route("/profil_edit/{id}", name="profil_edit")
      */
     public function edit_membre($id, Request $superGlobals, EntityManagerInterface $manager, MembreRepository $repo): Response
@@ -186,7 +205,6 @@ class HotelHouseController extends AbstractController
         return $this->render('hotel_house/membre_form.html.twig', [
             'formMembre' => $form->createView()
         ]);
-
     }
 
     /**
@@ -222,7 +240,7 @@ class HotelHouseController extends AbstractController
                 'tabCategories' => $categories
             ]);
         }
-        
+
         $messageForm = "Votre avis a bien été pris en compte.";
 
         $form = $this->createForm(CommentaireType::class, $commentaire);
