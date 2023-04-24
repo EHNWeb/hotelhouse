@@ -1,0 +1,128 @@
+<!-- Nav -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<div class="container-fluid">
+		<a class="navbar-brand">HotelHouse</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarColor01">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					<a class="nav-link active" href="{{ path('home') }}">
+						<i class="fa-solid fa-house"></i>&nbsp;Home
+						<span class="visually-hidden">(current)</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('show_chambre') }}">Chambres</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('show_restaurant') }}">Restaurant</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('show_spa') }}">Spa</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('show_reservation') }}">Réservation</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path('show_actualite') }}">Actualité</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">L'hôtel</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="{{ path('hotel_contact') }}">Contact / Accès</a>
+						<a class="dropdown-item" href="{{ path('form_avis') }}">Avis</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="{{ path('hotel_contact') }}">Qui sommes-nous ?</a>
+					</div>
+				</li>
+			</ul>
+
+			<ul class="navbar-nav me-auto">
+				{% if app.user is not null %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_panier') }}">Panier&nbsp;<i class="fa-solid fa-basket-shopping"></i>
+						</a>
+					</li>
+					{% set nbProducts = app.session.get('quantitePanier') %}
+					{% if nbProducts > 0 %}
+						<li>
+							<h6>
+								<span class="badge rounded-pill bg-danger">{{ nbProducts }}</span>
+							</h6>
+						</li>
+					{% endif %}
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fa-solid fa-coins"></i>
+						</a>
+					</li>
+					{% set totalCart = app.session.get('totalPanier') %}
+					{% if totalCart > 0 %}
+						<li>
+							<h6>
+								<span class="badge rounded-pill bg-success">{{ totalCart|number_format(2) }}
+									€</span>
+							</h6>
+						</li>
+					{% endif %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_panier') }}">Mes commandes&nbsp;<i class="fa-solid fa-cart-shopping"></i>
+						</a>
+					</li>
+				</ul>
+
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bonjour
+							{{ app.user.pseudo }}
+							!</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="{{ path('profil_show') }}">
+								<i class="fa-solid fa-eye"></i>&nbsp;Profil</a>
+							{% if is_granted("ROLE_ADMIN") %}
+								<a class="dropdown-item" href="{{ path('admin') }}">
+									<i class="fa-solid fa-chalkboard-user"></i>&nbsp;Back-Office</a>
+							{% else %}
+								<a class="dropdown-item">
+									<i class="fa-solid fa-user"></i>
+								</a>
+							{% endif %}
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="{{ path('app_logout') }}">
+								<i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;Se déconnecter
+							</a>
+						</div>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_register') }}">
+							<i class="fa-solid fa-user-plus"></i>&nbsp;S'inscrire</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_login') }}">
+							<i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;Se connecter</a>
+					</li>
+				{% endif %}
+				<li class="nav-item">
+					<a class="nav-link active">
+						<i class="fa-solid fa-calendar-days"></i>&nbsp;{{ "now"|date("D, d M Y") }}</a>
+				</li>
+			</ul>
+
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						<i class="fa-solid fa-language"></i>
+					</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#"><img src="{{ asset('images/siteweb/fr.png' ) }}">&nbsp;Français</a>
+						<a class="dropdown-item" href="#"><img src="{{ asset('images/siteweb/gb.png' ) }}">&nbsp;Anglais</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<!-- Nav -->

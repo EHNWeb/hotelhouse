@@ -22,10 +22,12 @@ use App\Repository\RestaurantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\SliderRestaurantRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\BodyRendererInterface;
 use Symfony\Component\Mime\Email;
 
 class HotelHouseController extends AbstractController
@@ -153,16 +155,20 @@ class HotelHouseController extends AbstractController
             }
 
             // Email
-            $email = (new Email())
-                ->from('hottin.eric@sfr.fr')
-                ->to('eric.hottin@gmail.com')
+            $email = (new TemplatedEmail())
+                ->from($this->getParameter('mail.user'))
+                ->to($newsletter->getEmail())
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('Time for Symfony Mailer! test 5')
+                ->subject('Time for Symfony Mailer! test 8888')
                 ->text('Sending emails is fun again!')
-                ->html('<p>See Twig integration for better HTML integration!</p>');
+                ->htmlTemplate('emails/newsletter.html.twig')
+                ->context([
+                    'destinataire' => $this->getParameter('mail.user'),
+                    'siteurl' => $this->getParameter('prod.base.url')
+                ]);
             $mailer->send($email);
             $messageForm = "Email envoyé.";
             $this->addFlash('success', $messageForm);

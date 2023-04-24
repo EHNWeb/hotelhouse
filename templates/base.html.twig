@@ -10,15 +10,14 @@
 		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 
 		{# CSS Local Bootstrap#}
-		<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+		<link
+		href="{{ asset('css/bootstrap.css') }}" rel="stylesheet"> {# Favicon #}
+		<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+		<link rel="manifest" href="{{ asset('site.webmanifest') }}">
 
-        {# Favicon #}
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
-        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-
-        {% block stylesheets %}
+		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 
@@ -26,274 +25,31 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 
-    </head>
-    <body>
-        <!-- Nav -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container-fluid">
-                <a class="navbar-brand">HotelHouse</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ path('home') }}"><i class="fa-solid fa-house"></i>&nbsp;Home
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('show_chambre') }}">Chambres</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('show_restaurant') }}">Restaurant</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('show_spa') }}">Spa</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('show_reservation') }}">Réservation</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('show_actualite') }}">Actualité</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">L'hôtel</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ path('hotel_contact') }}">Contact / Accès</a>
-                                    <a class="dropdown-item" href="{{ path('form_avis') }}">Avis</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ path('hotel_contact') }}">Qui sommes-nous ?</a>
-                            </div>
-                        </li>
-                    </ul>
+	</head>
+	<body>
+		<!-- Nav -->
+		{% block navigation %}
+			{% include 'navigation.html.twig' %}
+		{% endblock %}
+		<!-- Nav -->
+		<br>
+		<!-- Main -->
+		<div class="container">
+			{% block body %}{% endblock %}
+		</div>
+		<!-- Main -->
+		<br>
+		<!-- Footer -->
+		{% block footer %}
+			{% include 'footer.html.twig' %}
+		{% endblock %}
+		<!-- Footer -->
 
-                    <ul class="navbar-nav me-auto">
-                {% if app.user is not null %}    
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_panier') }}">Panier&nbsp;<i class="fa-solid fa-basket-shopping"></i></a>
-                        </li>
-                    {% set nbProducts = app.session.get('quantitePanier') %}
-                    {% if nbProducts > 0 %}
-                        <li><h6><span class="badge rounded-pill bg-danger">{{ nbProducts }}</span></h6></li>
-                    {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fa-solid fa-coins"></i></a>
-                        </li>
-                    {% set totalCart = app.session.get('totalPanier') %}
-                    {% if totalCart > 0 %}
-                        <li><h6><span class="badge rounded-pill bg-success">{{ totalCart|number_format(2) }} €</span></h6></li>
-                    {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_panier') }}">Mes commandes&nbsp;<i class="fa-solid fa-cart-shopping"></i></a>
-                        </li>
-                    </ul>
+		{# Font Awesomw#}
+		<script src="https://kit.fontawesome.com/032b0d3637.js" crossorigin="anonymous"></script>
 
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bonjour {{ app.user.pseudo }} !</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ path('profil_show') }}"><i class="fa-solid fa-eye"></i>&nbsp;Profil</a>
-                            {% if is_granted("ROLE_ADMIN") %}
-                                <a class="dropdown-item" href="{{ path('admin') }}"><i class="fa-solid fa-chalkboard-user"></i>&nbsp;Back-Office</a>
-                            {% else %}
-                                <a class="dropdown-item"><i class="fa-solid fa-user"></i></a>
-                            {% endif %}
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ path('app_logout') }}">
-                                    <i class="fa-solid fa-arrow-right-from-bracket"></i>&nbsp;Se déconnecter
-                                </a>
-                            </div>
-                        </li>
-                {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_register') }}"><i class="fa-solid fa-user-plus"></i>&nbsp;S'inscrire</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_login') }}"><i class="fa-solid fa-arrow-right-to-bracket"></i>&nbsp;Se connecter</a>
-                        </li>
-                {% endif %}
-                        <li class="nav-item">
-                            <a class="nav-link active"><i class="fa-solid fa-calendar-days"></i>&nbsp;{{ "now"|date("D, d M Y") }}</a>
-                        </li>
-                    </ul>
-
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-language"></i></a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#"><img src="{{ asset('images/siteweb/fr.png' ) }}">&nbsp;Français</a>
-                                <a class="dropdown-item" href="#"><img src="{{ asset('images/siteweb/gb.png' ) }}">&nbsp;Anglais</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- Nav -->
-        <br>
-        <!-- Main -->
-        <div class="container">
-            {% block body %}{% endblock %}
-        </div>
-        <!-- Main -->
-        <br>
-        <!-- Footer -->
-        <footer
-            class=" text-center text-white" style="background-color:#426b96;">
-            <!-- Grid container -->
-            <div
-                class="container p-4">
-
-                <!-- Section: Social media -->
-                <section
-                    class="mb-4">
-                    <!-- Facebook -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998" href="#!" role="button">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-
-                    <!-- Twitter -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #55acee" href="#!" role="button">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-
-                    <!-- Google -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39" href="#!" role="button">
-                        <i class="fab fa-google"></i>
-                    </a>
-
-                    <!-- Instagram -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac" href="#!" role="button">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-
-                    <!-- Linkedin -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #0082ca" href="#!" role="button">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <!-- Github -->
-                    <a class="btn btn-primary btn-floating m-1" style="background-color: #333333" href="#!" role="button">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </section>
-                <!-- Section: Social media -->
-
-                <!-- Section: Text -->
-                <section class="mb-4">
-                    <p>
-                        Retrouvez nous sur les réseaux sociaux et bénéficier de promotions, d'excursions privées ou de présentation en avant-premières.
-                    </p>
-                </section>
-                <!-- Section: Text -->
-
-
-                <!-- Section: Links -->
-                <section
-                    class="">
-                    <!--Grid row-->
-                    <div
-                        class="row">
-                        <!--Grid column-->
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Raccourcis</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="{{ path('home') }}" class="text-white">Accueil</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('show_chambre') }}" class="text-white">Chambre</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('show_restaurant') }}" class="text-white">Restaurant</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('show_spa') }}" class="text-white">Spa</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--Grid column-->
-
-                        <!--Grid column-->
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">L'hôtel</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="{{ path('hotel_contact') }}" class="text-white">Qui sommes-nous ?</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('hotel_contact') }}" class="text-white">Accès</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('hotel_contact') }}" class="text-white">Contact</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--Grid column-->
-
-                        <!--Grid column-->
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">A propos</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#!" class="text-white">Mentions légales</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Conditions générales de ventes</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Plan du site</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--Grid column-->
-
-                        <!--Grid column-->
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Divers</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="{{ path('hotel_contact') }}" class="text-white">Nous écrire</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="text-white" OnClick="javascript:window.print()">Imprimer la page</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('show_actualite') }}" class="text-white">Actualité</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('form_newsletter') }}" class="text-white">Newsletter</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!--Grid column-->
-                    </div>
-                    <!--Grid row-->
-                </section>
-                <!-- Section: Links -->
-
-            </div>
-            <!-- Grid container -->
-
-            <!-- Copyright -->
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-                <i class="fa-solid fa-copyright"></i> 2022 Copyright: HOTTIN Éric - Projet HOTELHOUSE
-            </div>
-            <!-- Copyright -->
-
-        </footer>
-        <!-- Footer -->
-
-
-        {# Font Awesomw#}
-        <script src="https://kit.fontawesome.com/032b0d3637.js" crossorigin="anonymous"></script>
-
-        {# JS Bootstrap#}
-        <script src="{{ asset('js/popper.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    </body>
+		{# JS Bootstrap#}
+		<script src="{{ asset('js/popper.min.js') }}"></script>
+		<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+	</body>
 </html>
