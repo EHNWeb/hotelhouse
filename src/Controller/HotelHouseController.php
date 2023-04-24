@@ -160,7 +160,7 @@ class HotelHouseController extends AbstractController
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('Time for Symfony Mailer! test 3')
+                ->subject('Time for Symfony Mailer! test 5')
                 ->text('Sending emails is fun again!')
                 ->html('<p>See Twig integration for better HTML integration!</p>');
             $mailer->send($email);
